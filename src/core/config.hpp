@@ -41,8 +41,8 @@ struct ConsumerConfig {
     int listen_port = LISTENER_DEFAULT_PORT;
     std::vector<std::string> topic_patterns;
 
-    ConsumerConfig()
-        : broker_url("http://localhost:" + std::to_string(BROKER_DEFAULT_PORT))
+    explicit ConsumerConfig(const std::string& broker_domain)
+        : broker_url(std::format("{}:{}", broker_domain, BROKER_DEFAULT_PORT))
     {}
 };
 
