@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <print>
+#include <mutex>
 
 namespace mqpp {
 

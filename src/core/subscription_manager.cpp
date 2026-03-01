@@ -1,6 +1,7 @@
 #include "subscription_manager.hpp"
 #include <algorithm>
 #include <ranges>
+#include <mutex>
 
 namespace mqpp {
 
