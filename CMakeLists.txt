@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.21)
 project(mq++ VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_THREAD_LIBS_INIT "-lpthread")
 set(CMAKE_HAVE_THREADS_LIBRARY 1)
@@ -34,6 +36,7 @@ set(MQPP_SOURCES
 
     src/threading/thread_pool.cpp
     src/threading/message_dispatcher.cpp
+        examples/consumer_example.cpp
 )
 
 add_library(mqpp ${MQPP_SOURCES})
@@ -43,4 +46,17 @@ target_include_directories(mqpp PUBLIC
 target_link_libraries(mqpp PUBLIC
     httplib::httplib
     stduuid
+    pthread
 )
+
+add_executable(mq++_broker examples/broker_example.cpp)
+target_link_libraries(mq++_broker PRIVATE mqpp)
+
+add_executable(simple_publisher examples/publisher_example.cpp)
+target_link_libraries(simple_publisher PRIVATE mqpp)
+
+add_executable(simple_consumer examples/consumer_example.cpp)
+target_link_libraries(simple_consumer PRIVATE mqpp)
+
+add_executable(mq++_main main.cpp)
+target_link_libraries(mq++_main PRIVATE mqpp)
