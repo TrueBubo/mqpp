@@ -57,6 +57,3 @@ target_link_libraries(simple_publisher PRIVATE mqpp)
 
 add_executable(simple_consumer examples/consumer_example.cpp)
 target_link_libraries(simple_consumer PRIVATE mqpp)
-
-add_executable(mq++_main main.cpp)
-target_link_libraries(mq++_main PRIVATE mqpp)
