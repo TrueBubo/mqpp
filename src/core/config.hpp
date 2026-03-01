@@ -27,8 +27,8 @@ struct PublisherConfig {
     std::string broker_url;
     std::chrono::seconds timeout{5};
 
-    explicit PublisherConfig(const std::string& broker_domain = "http://localhost:")
-        : broker_url(broker_domain + std::to_string(BROKER_DEFAULT_PORT))
+    explicit PublisherConfig(const std::string& broker_url = std::format("http://localhost:{}", BROKER_DEFAULT_PORT))
+        : broker_url(broker_url)
     {}
 };
 
