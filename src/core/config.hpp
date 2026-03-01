@@ -38,11 +38,15 @@ struct PublisherConfig {
 struct ConsumerConfig {
     std::string broker_url;
     std::string consumer_id;
-    int listen_port = LISTENER_DEFAULT_PORT;
+    int listen_port;
     std::vector<std::string> topic_patterns;
 
-    explicit ConsumerConfig(const std::string& broker_domain = "http://localhost")
-        : broker_url(std::format("{}:{}", broker_domain, BROKER_DEFAULT_PORT))
+    explicit ConsumerConfig(
+        const std::string& consumer_id,
+        std::vector<std::string>& topic_patterns,
+        const std::string& broker_url = std::format("http://localhost:{}", BROKER_DEFAULT_PORT),
+        int listen_port = LISTENER_DEFAULT_PORT
+        ) : consumer_id(consumer_id), topic_patterns(topic_patterns), broker_url(broker_url), listen_port(listen_port)
     {}
 };
 
