@@ -43,11 +43,6 @@ public:
     virtual void stop() = 0;
 
     /**
-     * Check if transport is running
-     */
-    virtual bool is_running() const = 0;
-
-    /**
      * Get the port this transport is listening on
      * Returns 0 if not started
      */
