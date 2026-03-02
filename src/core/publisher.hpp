@@ -24,7 +24,7 @@ public:
     /**
      * Publish a message to a topic
      */
-    void publish(const std::string& topic, const std::string& payload) const;
+    MessageId publish(const std::string& topic, const std::string& payload) const;
 
     /**
      * Publish a message and return the assigned message ID

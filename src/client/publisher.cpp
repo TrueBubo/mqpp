@@ -12,8 +12,8 @@ Publisher::Publisher(const PublisherConfig& config)
 
 Publisher::~Publisher() = default;
 
-void Publisher::publish(const std::string& topic, const std::string& payload) const {
-    publish_with_id(topic, payload);
+MessageId Publisher::publish(const std::string& topic, const std::string& payload) const {
+    return publish_with_id(topic, payload);
 }
 
 MessageId Publisher::publish_with_id(const std::string& topic, const std::string& payload) const {
@@ -23,10 +23,10 @@ MessageId Publisher::publish_with_id(const std::string& topic, const std::string
         request["topic"] = topic;
         request["payload"] = payload;
 
-        std::string url = config_.broker_url + "/publish";
-        std::string response = transport_->send_request(url, StringSerializer::serialize(request));
+        auto&& url = config_.broker_url + "/publish";
+        auto&& response = transport_->send_request(url, StringSerializer::serialize(request));
 
-        auto response_data = StringSerializer::parse(response);
+        auto&& response_data = StringSerializer::parse(response);
 
         if (StringSerializer::get(response_data, "status") != "ok") {
             throw std::runtime_error("Publish failed: " +
