@@ -59,6 +59,12 @@ public:
      */
     void unregister_consumer_endpoint(const CustomerId& consumer_id);
 
+    /**
+     * Dispatch all pending (unacknowledged) messages for a consumer.
+     * Called on reconnect to flush messages missed during disconnection.
+     */
+    void dispatch_pending_for_consumer(const CustomerId& consumer_id);
+
 private:
     std::shared_ptr<ITransport> transport_;
     std::shared_ptr<MessageStore> store_;

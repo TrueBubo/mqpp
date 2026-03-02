@@ -94,7 +94,7 @@ void MessageDispatcher::retry_loop() const {
             auto&& messages = store_->get_messages_for_retry(retry_interval_);
 
             for (auto&& [msg, state] : messages) {
-                deliver_to_consumers(msg, state.acknowledged_consumers);
+                deliver_to_consumers(msg, state.pending_consumers);
             }
 
         } catch (const std::exception& e) {
@@ -104,6 +104,13 @@ void MessageDispatcher::retry_loop() const {
         for (int i = 0; i < RETRY_LOOP_MAX_ATTEMPTS && running_; ++i) {
             std::this_thread::sleep_for(RETRY_LOOP_DELAY);
         }
+    }
+}
+
+void MessageDispatcher::dispatch_pending_for_consumer(const CustomerId& consumer_id) {
+    auto pending = store_->get_pending_messages_for_consumer(consumer_id);
+    for (auto&& [msg, state] : pending) {
+        deliver_to_consumer(msg, consumer_id);
     }
 }
 

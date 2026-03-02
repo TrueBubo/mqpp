@@ -71,6 +71,12 @@ public:
      */
     std::optional<DeliveryState> get_delivery_state(const MessageId& msg_id) const;
 
+    /**
+     * Get all messages that are pending delivery for a specific consumer
+     */
+    std::vector<std::pair<Message, DeliveryState>> get_pending_messages_for_consumer(
+        const std::string& consumer_id);
+
 private:
     std::filesystem::path storage_dir_;
     mutable std::shared_mutex mutex_; // allows locking/unlocking in const context

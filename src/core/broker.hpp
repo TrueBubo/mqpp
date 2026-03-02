@@ -54,7 +54,7 @@ private:
     void setup_handlers();
 
     std::string handle_publish(const std::string& request) const;
-    std::string handle_subscribe(const std::string& request) const;
+    std::string handle_subscribe(const std::string& request);
     std::string handle_acknowledge(const std::string& request) const;
 };
 

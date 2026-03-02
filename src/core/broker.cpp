@@ -101,7 +101,7 @@ std::string Broker::handle_publish(const std::string& request_str) const {
     }
 }
 
-std::string Broker::handle_subscribe(const std::string& request_str) const {
+std::string Broker::handle_subscribe(const std::string& request_str) {
     try {
         auto&& req = StringSerializer::parse(request_str);
 
@@ -114,6 +114,8 @@ std::string Broker::handle_subscribe(const std::string& request_str) const {
         dispatcher_->register_consumer_endpoint(consumer_id, callback_url);
 
         for (auto&& pattern : patterns) subscription_mgr_->add_subscription(consumer_id, pattern);
+
+        dispatcher_->dispatch_pending_for_consumer(consumer_id);
 
         std::map<std::string, std::string> response;
         response["status"] = "ok";

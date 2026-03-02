@@ -191,6 +191,22 @@ MessageStore::read_message_file(const std::filesystem::path& file) {
     return {std::move(msg), std::move(state)};
 }
 
+std::vector<std::pair<Message, DeliveryState>>
+MessageStore::get_pending_messages_for_consumer(const std::string& consumer_id) {
+    std::shared_lock lock(mutex_);
+
+    std::vector<std::pair<Message, DeliveryState>> messages;
+
+    for (const auto& [msg_id, state] : delivery_tracking_) {
+        if (state.pending_consumers.contains(consumer_id)) {
+            auto [msg, current_state] = read_message_file(get_message_path(msg_id));
+            messages.emplace_back(std::move(msg), std::move(current_state));
+        }
+    }
+
+    return messages;
+}
+
 std::filesystem::path MessageStore::get_message_path(const MessageId& msg_id) const {
     return storage_dir_ / (msg_id + ".txt");
 }
