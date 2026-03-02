@@ -5,7 +5,7 @@
 #include "../network/http_transport.hpp"
 #include "../core/subscription_manager.hpp"
 #include "../persistence/message_store.hpp"
-#include "../threading/message_dispatcher.hpp"
+#include "../dispatching/message_dispatcher.hpp"
 #include <stdexcept>
 
 namespace mqpp {

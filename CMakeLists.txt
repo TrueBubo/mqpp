@@ -35,7 +35,7 @@ set(MQPP_SOURCES
     src/client/consumer.cpp
 
     src/threading/thread_pool.cpp
-    src/threading/message_dispatcher.cpp
+        src/dispatching/message_dispatcher.cpp
         examples/consumer_example.cpp
 )
 
