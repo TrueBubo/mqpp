@@ -1,6 +1,6 @@
 #include "consumer.hpp"
 #include "../network/http_transport.hpp"
-#include "../core/string_utils.hpp"
+#include "../util/string_utils.hpp"
 #include <stdexcept>
 #include <sstream>
 

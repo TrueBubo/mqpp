@@ -2,7 +2,8 @@
 
 #include <mutex>
 
-#include "../core/string_utils.hpp"
+#include "../util/string_utils.hpp"
+#include "iostream"
 #include <print>
 
 namespace mqpp {
@@ -24,9 +25,14 @@ MessageDispatcher::~MessageDispatcher() {
 }
 
 void MessageDispatcher::dispatch(const Message& message,
-                                const std::vector<UserId>& consumer_ids) {
+                                const std::vector<UserId>& consumer_ids) const {
     for (auto&& consumer_id : consumer_ids) {
-        deliver_to_consumer(message, consumer_id);
+        auto&& is_delivered = deliver_to_consumer(message, consumer_id);
+        if (!is_delivered) {
+            std::println(std::cerr,
+                "Failed to deliver message to {}:\nMessage:\n\t{}", consumer_id, message.serialize()
+                );
+        }
     }
 }
 

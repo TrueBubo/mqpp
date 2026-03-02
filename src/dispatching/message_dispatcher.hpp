@@ -33,7 +33,7 @@ public:
      * Does not wait for acknowledgement
      */
     void dispatch(const Message& message,
-                 const std::vector<UserId>& consumer_ids);
+                 const std::vector<UserId>& consumer_ids) const;
 
     /**
      * Start the retry background thread

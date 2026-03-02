@@ -1,5 +1,5 @@
 #include "message_store.hpp"
-#include "../core/string_utils.hpp"
+#include "../util/string_utils.hpp"
 #include <fstream>
 #include <stdexcept>
 #include <sstream>

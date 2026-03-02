@@ -9,12 +9,6 @@
 
 namespace mqpp {
 
-constexpr auto KEY_VALUE_ASSOCIATOR_CHAR = '=';
-constexpr auto ENTRY_SEPARATOR_CHAR = '|';
-constexpr auto ESCAPE_CHAR = '\\';
-
-constexpr auto VECTOR_ITEM_SEPARATOR_CHAR = ',';
-
 /**
  * String serialization utility
  * Format: key1=value1|key2=value2|key3=value3
@@ -162,6 +156,12 @@ private:
     static std::runtime_error missing_required_field_exception(const std::string& key) {
         return std::runtime_error("Missing required field: " + key);
     }
+
+    static constexpr auto KEY_VALUE_ASSOCIATOR_CHAR = '=';
+    static constexpr auto ENTRY_SEPARATOR_CHAR = '|';
+    static constexpr auto ESCAPE_CHAR = '\\';
+
+    static constexpr auto VECTOR_ITEM_SEPARATOR_CHAR = ',';
 };
 
 }  // namespace mqpp
