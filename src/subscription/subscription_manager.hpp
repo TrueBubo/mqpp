@@ -4,7 +4,7 @@
 #include <vector>
 #include <regex>
 #include <shared_mutex>
-#include "types.hpp"
+#include "../core/types.hpp"
 
 namespace mqpp {
 

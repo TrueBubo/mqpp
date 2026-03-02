@@ -3,7 +3,7 @@
 #include "../util/string_utils.hpp"
 #include "../threading/thread_pool.hpp"
 #include "../network/http_transport.hpp"
-#include "../core/subscription_manager.hpp"
+#include "../subscription/subscription_manager.hpp"
 #include "../persistence/message_store.hpp"
 #include "../dispatching/message_dispatcher.hpp"
 #include <stdexcept>
