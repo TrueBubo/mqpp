@@ -1,14 +1,14 @@
 #ifndef STRING_UTILS_HPP
 #define STRING_UTILS_HPP
 
-#include <string>
 #include <map>
+#include <string>
 #include <vector>
 #include <sstream>
 #include <stdexcept>
 
 namespace mqpp {
-
+using Data = std::map<std::string, std::string>;
 /**
  * String serialization utility
  * Format: key1=value1|key2=value2|key3=value3
@@ -17,8 +17,8 @@ namespace mqpp {
  */
 class StringSerializer {
 public:
-    static std::map<std::string, std::string> parse(const std::string& str) {
-        std::map<std::string, std::string> result;
+    static Data parse(const std::string& str) {
+        Data result;
         std::string current_key;
         std::string current_value;
         bool reading_key = true;
@@ -56,7 +56,7 @@ public:
         return result;
     }
 
-    static std::string serialize(const std::map<std::string, std::string>& data) {
+    static std::string serialize(const Data& data) {
         std::ostringstream oss;
         bool first = true;
 
@@ -69,14 +69,14 @@ public:
         return oss.str();
     }
 
-    static std::string get(const std::map<std::string, std::string>& data,
+    static std::string get(const Data& data,
                           const std::string& key,
                           const std::string& default_value = "") {
         auto&& entry = data.find(key);
         return (entry != data.end()) ? entry->second : default_value;
     }
 
-    static std::string get_required(const std::map<std::string, std::string>& data,
+    static std::string get_required(const Data& data,
                                     const std::string& key) {
         auto&& entry = data.find(key);
         if (entry == data.end()) {

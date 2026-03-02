@@ -3,7 +3,7 @@
 #include "../util/string_utils.hpp"
 #include <stdexcept>
 
-#include "shared.hpp"
+#include "../shared.hpp"
 
 namespace mqpp {
 
@@ -16,13 +16,10 @@ Publisher::~Publisher() = default;
 
 MessageId Publisher::publish(const std::string& topic, const std::string& payload) const {
     try {
-        std::map<std::string, std::string> request;
-        request[field::type] = type::publish;
-        request[field::topic] = topic;
-        request[field::payload] = payload;
+        auto&& request = create_publish_request(topic, payload);
 
         auto&& url = config_.broker_url + endpoint::publish;
-        auto&& response = transport_->send_request(url, StringSerializer::serialize(request));
+        auto&& response = transport_->send_request(url, request);
 
         auto&& response_data = StringSerializer::parse(response);
 
@@ -38,4 +35,12 @@ MessageId Publisher::publish(const std::string& topic, const std::string& payloa
     }
 }
 
+std::string Publisher::create_publish_request(const std::string &topic, const std::string &payload) {
+    std::map<std::string, std::string> request;
+    request[field::type] = type::publish;
+    request[field::topic] = topic;
+    request[field::payload] = payload;
+
+    return StringSerializer::serialize(request);
+}
 }  // namespace mqpp

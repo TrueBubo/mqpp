@@ -16,15 +16,15 @@ public:
     /**
      * Send request to remote endpoint, wait for response
      * @param url Full URL or endpoint
-     * @param body JSON request body
-     * @return JSON response body
+     * @param body string request body
+     * @return string response body
      */
     virtual std::string send_request(const std::string& url,
                                      const std::string& body) = 0;
 
     /**
      * Register handler for incoming requests at an endpoint
-     * Handler receives JSON body and returns JSON response
+     * Handler receives string body and returns string response
      */
     using RequestHandler = std::function<std::string(const std::string& json)>;
 

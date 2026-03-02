@@ -29,6 +29,8 @@ public:
 private:
     PublisherConfig config_;
     std::unique_ptr<ITransport> transport_;
+
+    static std::string create_publish_request(const std::string& topic, const std::string& payload) ;
 };
 
 }  // namespace mqpp

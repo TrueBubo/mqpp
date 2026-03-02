@@ -1,5 +1,5 @@
 #include "broker.hpp"
-#include "shared.hpp"
+#include "../shared.hpp"
 #include "../message/message.hpp"
 #include "../util/string_utils.hpp"
 #include "../threading/thread_pool.hpp"
@@ -54,7 +54,7 @@ void Broker::stop() {
 }
 
 
-void Broker::setup_handlers() {
+void Broker::setup_handlers() const {
     transport_->register_handler(endpoint::publish,
         [this](const std::string& data) {
             return handle_publish(data);
@@ -73,44 +73,28 @@ void Broker::setup_handlers() {
 
 std::string Broker::handle_publish(const std::string& request_str) const {
     try {
-        auto&& req = StringSerializer::parse(request_str);
+        auto&& request = PublishRequest::from_api(request_str);
+        auto&& [topic, payload] = request;
 
-        auto&& topic = StringSerializer::get_required(req, field::topic);
-        auto&& payload = StringSerializer::get_required(req, field::payload);
+        Message message(topic, payload);
 
-        Message msg(topic, payload);
-
-        auto consumers = subscription_mgr_->find_matching_consumers(topic);
+        auto&& consumers = subscription_mgr_->find_matching_consumers(topic);
 
         if (!consumers.empty()) {
-            message_store_->persist_message(msg, consumers);
-            dispatcher_->dispatch(msg, consumers);
+            message_store_->persist_message(message, consumers);
+            dispatcher_->dispatch(message, consumers);
         }
 
-        std::map<std::string, std::string> response;
-        response[field::status]     = status::ok;
-        response[field::message_id] = msg.id();
-        response[field::consumers]  = std::to_string(consumers.size());
-
-        return StringSerializer::serialize(response);
-
-    } catch (const std::exception& e) {
-        std::map<std::string, std::string> error;
-        error[field::status]  = status::error;
-        error[field::message] = e.what();
-        return StringSerializer::serialize(error);
+        return PublishRequest::to_response(message.id(), consumers.size());
+    } catch (const std::exception& exception) {
+        return create_error_response(exception);
     }
 }
 
-std::string Broker::handle_subscribe(const std::string& request_str) {
+std::string Broker::handle_subscribe(const std::string& request_str) const {
     try {
-        auto&& req = StringSerializer::parse(request_str);
-
-        auto&& consumer_id = StringSerializer::get_required(req, field::consumer_id);
-        auto&& patterns_str = StringSerializer::get_required(req, field::patterns);
-        auto&& callback_url = StringSerializer::get_required(req, field::callback_url);
-
-        auto&& patterns = StringSerializer::parse_vector(patterns_str);
+        auto&& request = SubscribeRequest::from_api(request_str);
+        auto&& [consumer_id, callback_url, patterns_str, patterns] = request;
 
         dispatcher_->register_consumer_endpoint(consumer_id, callback_url);
 
@@ -118,41 +102,77 @@ std::string Broker::handle_subscribe(const std::string& request_str) {
 
         dispatcher_->dispatch_pending_for_consumer(consumer_id);
 
-        std::map<std::string, std::string> response;
-        response[field::status]      = status::ok;
-        response[field::consumer_id] = consumer_id;
-        response[field::patterns]    = patterns_str;
-
-        return StringSerializer::serialize(response);
-
-    } catch (const std::exception& e) {
-        std::map<std::string, std::string> error;
-        error[field::status]  = status::error;
-        error[field::message] = e.what();
-        return StringSerializer::serialize(error);
+        return request.to_response();
+    } catch (const std::exception& exception) {
+        return create_error_response(exception);
     }
 }
 
 std::string Broker::handle_acknowledge(const std::string& request_str) const {
     try {
-        auto&& req = StringSerializer::parse(request_str);
-
-        std::string message_id = StringSerializer::get_required(req, field::message_id);
-        std::string consumer_id = StringSerializer::get_required(req, field::consumer_id);
-
+        auto&& [message_id, consumer_id] = AcknowledgeRequest::from_api(request_str);
         message_store_->acknowledge(message_id, consumer_id);
-
-        std::map<std::string, std::string> response;
-        response[field::status] = status::ok;
-
-        return StringSerializer::serialize(response);
-
-    } catch (const std::exception& e) {
-        std::map<std::string, std::string> error;
-        error[field::status] = status::error;
-        error[field::message] = e.what();
-        return StringSerializer::serialize(error);
+        return create_ok_response();
+    } catch (const std::exception& exception) {
+        return create_error_response(exception);
     }
 }
 
+PublishRequest PublishRequest::from_api(const std::string& request_str) {
+    auto&& req = StringSerializer::parse(request_str);
+
+    auto&& topic = StringSerializer::get_required(req, field::topic);
+    auto&& payload = StringSerializer::get_required(req, field::payload);
+
+    return {
+    std::move(topic),
+    std::move(payload),
+    };
+}
+
+std::string PublishRequest::to_response(const MessageId& message_id, std::size_t consumer_count) {
+    std::map<std::string, std::string> response;
+    response[field::status]     = status::ok;
+    response[field::message_id] = message_id;
+    response[field::consumers]  = std::to_string(consumer_count);
+    return StringSerializer::serialize(response);
+}
+
+SubscribeRequest SubscribeRequest::from_api(const std::string& request_str) {
+    auto&& request_map = StringSerializer::parse(request_str);
+
+    auto&& consumer_id = StringSerializer::get_required(request_map, field::consumer_id);
+    auto&& callback_url = StringSerializer::get_required(request_map, field::callback_url);
+
+    auto&& patterns_str = StringSerializer::get_required(request_map, field::patterns);
+    auto&& patterns = StringSerializer::parse_vector(patterns_str);
+
+    return {
+        std::move(consumer_id),
+        std::move(callback_url),
+        std::move(patterns_str),
+        patterns
+    };
+}
+
+std::string SubscribeRequest::to_response() {
+    std::map<std::string, std::string> response;
+    response[field::status]      = status::ok;
+    response[field::consumer_id] = std::move(consumer_id);
+    response[field::patterns]    = std::move(patterns_str);
+
+    return StringSerializer::serialize(response);
+}
+
+AcknowledgeRequest AcknowledgeRequest::from_api(const std::string& request_str) {
+    auto&& req = StringSerializer::parse(request_str);
+
+    std::string message_id = StringSerializer::get_required(req, field::message_id);
+    std::string consumer_id = StringSerializer::get_required(req, field::consumer_id);
+
+    return {
+    std::move(message_id),
+        std::move(consumer_id),
+    };
+}
 }  // namespace mqpp

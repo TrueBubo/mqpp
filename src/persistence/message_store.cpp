@@ -1,10 +1,11 @@
 #include "message_store.hpp"
-#include "../util/string_utils.hpp"
 #include <fstream>
 #include <stdexcept>
 #include <sstream>
 #include <print>
 #include <mutex>
+
+#include "shared.hpp"
 
 namespace mqpp {
 
@@ -104,19 +105,19 @@ MessageStore::get_delivery_state(const MessageId& msg_id) const {
 void MessageStore::write_message_file(const Message& msg, const DeliveryState& state) const {
     std::ostringstream content;
 
-    content << fields::message << '=' << msg.serialize() << '\n';
+    content << field::message << '=' << msg.serialize() << '\n';
 
     std::vector pending_vec(state.pending_consumers.begin(),
                                          state.pending_consumers.end());
-    content << fields::pending << '=' << StringSerializer::serialize_vector(pending_vec) << '\n';
+    content << field::pending << '=' << StringSerializer::serialize_vector(pending_vec) << '\n';
 
     std::vector acked_vec(state.acknowledged_consumers.begin(),
                                        state.acknowledged_consumers.end());
-    content << fields::acknowledged << '=' << StringSerializer::serialize_vector(acked_vec) << '\n';
+    content << field::acknowledged << '=' << StringSerializer::serialize_vector(acked_vec) << '\n';
 
     auto duration = state.last_retry.time_since_epoch();
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration).count();
-    content << fields::last_retry << '=' << seconds << '\n';
+    content << field::last_retry << '=' << seconds << '\n';
 
     auto final_path = get_message_path(msg.id());
     auto temp_path = final_path;
@@ -146,47 +147,9 @@ void MessageStore::delete_message_file(const MessageId& msg_id) const {
 }
 
 std::pair<Message, DeliveryState> MessageStore::read_message_file(const std::filesystem::path& file) {
-    std::ifstream input(file);
-    if (!input) {
-        throw std::runtime_error("Failed to open file for reading: " + file.string());
-    }
-
-    std::map<std::string, std::string> data;
-    std::string line;
-    while (std::getline(input, line)) {
-        auto eq_pos = line.find('=');
-        if (eq_pos != std::string::npos) {
-            std::string key = line.substr(0, eq_pos);
-            std::string value = line.substr(eq_pos + 1);
-            data[key] = value;
-        }
-    }
-
-    std::string message_str = StringSerializer::get_required(data, "MESSAGE");
-    Message msg = Message::deserialize(message_str);
-
-    DeliveryState state;
-    state.message_id = msg.id();
-    state.topic = msg.topic();
-
-    std::string pending_str = StringSerializer::get(data, "PENDING", "");
-    if (!pending_str.empty()) {
-        auto pending_vec = StringSerializer::parse_vector(pending_str);
-        state.pending_consumers = std::unordered_set(
-            pending_vec.begin(), pending_vec.end());
-    }
-
-    std::string acked_str = StringSerializer::get(data, "ACKNOWLEDGED", "");
-    if (!acked_str.empty()) {
-        auto acked_vec = StringSerializer::parse_vector(acked_str);
-        state.acknowledged_consumers = std::unordered_set(
-            acked_vec.begin(), acked_vec.end());
-    }
-
-    std::string retry_str = StringSerializer::get_required(data, "LAST_RETRY");
-    long long seconds = std::stoll(retry_str);
-    state.last_retry = std::chrono::system_clock::time_point(std::chrono::seconds(seconds));
-
+    auto data = parse_file_data(file);
+    Message msg = parse_message(data);
+    DeliveryState state = parse_delivery_state(data, msg);
     return {std::move(msg), std::move(state)};
 }
 
@@ -208,6 +171,52 @@ MessageStore::get_pending_messages_for_consumer(const std::string& consumer_id) 
 
 std::filesystem::path MessageStore::get_message_path(const MessageId& msg_id) const {
     return storage_dir_ / (msg_id + FILE_EXTENSION);
+}
+
+Data MessageStore::parse_file_data(const std::filesystem::path& file) {
+    std::ifstream input(file);
+    if (!input) {
+        throw std::runtime_error("Failed to open file for reading: " + file.string());
+    }
+
+    Data data;
+    std::string line;
+    while (std::getline(input, line)) {
+        auto eq_pos = line.find('=');
+        if (eq_pos != std::string::npos) {
+            data[line.substr(0, eq_pos)] = line.substr(eq_pos + 1);
+        }
+    }
+    return data;
+}
+
+Message MessageStore::parse_message(const Data& data) {
+    std::string message_str = StringSerializer::get_required(data, field::message);
+    return Message::deserialize(message_str);
+}
+
+DeliveryState MessageStore::parse_delivery_state(const Data& data, const Message& msg) {
+    DeliveryState state;
+    state.message_id = msg.id();
+    state.topic = msg.topic();
+
+    std::string pending_str = StringSerializer::get(data, field::pending, "");
+    if (!pending_str.empty()) {
+        auto pending_vec = StringSerializer::parse_vector(pending_str);
+        state.pending_consumers = std::unordered_set(pending_vec.begin(), pending_vec.end());
+    }
+
+    std::string acked_str = StringSerializer::get(data, field::acknowledged, "");
+    if (!acked_str.empty()) {
+        auto acked_vec = StringSerializer::parse_vector(acked_str);
+        state.acknowledged_consumers = std::unordered_set(acked_vec.begin(), acked_vec.end());
+    }
+
+    std::string retry_str = StringSerializer::get_required(data, field::last_retry);
+    long long seconds = std::stoll(retry_str);
+    state.last_retry = std::chrono::system_clock::time_point(std::chrono::seconds(seconds));
+
+    return state;
 }
 
 }  // namespace mqpp

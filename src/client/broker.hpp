@@ -47,11 +47,36 @@ private:
 
     bool running_;
 
-    void setup_handlers();
+    void setup_handlers() const;
 
     std::string handle_publish(const std::string& request) const;
-    std::string handle_subscribe(const std::string& request);
-    std::string handle_acknowledge(const std::string& request) const;
+    std::string handle_subscribe(const std::string& request_str) const;
+    std::string handle_acknowledge(const std::string& request_str) const;
+};
+
+struct PublishRequest {
+    std::string topic;
+    std::string payload;
+
+    static PublishRequest from_api(const std::string& request_str);
+    static std::string to_response(const MessageId& message_id, std::size_t consumer_count);
+};
+
+struct SubscribeRequest {
+    UserId consumer_id;
+    CallbackUrl callback_url;
+    std::string patterns_str;
+    std::vector<std::string> patterns;
+
+    static SubscribeRequest from_api(const std::string& request_str);
+    std::string to_response();
+};
+
+struct AcknowledgeRequest {
+    MessageId message_id;
+    UserId consumer_id;
+
+    static AcknowledgeRequest from_api(const std::string& request_str);
 };
 
 }  // namespace mqpp

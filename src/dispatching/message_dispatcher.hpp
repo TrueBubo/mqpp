@@ -59,7 +59,7 @@ public:
      * Dispatch all pending (unacknowledged) messages for a consumer.
      * Called on reconnect to flush messages missed during disconnection.
      */
-    void dispatch_pending_for_consumer(const UserId& consumer_id);
+    void dispatch_pending_for_consumer(const UserId& consumer_id) const;
 
 private:
     std::shared_ptr<ITransport> transport_;

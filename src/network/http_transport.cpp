@@ -14,19 +14,18 @@ HttpTransport::~HttpTransport() {
     HttpTransport::stop();
 }
 
-std::string HttpTransport::send_request(const std::string& url,
-                                       const std::string& body) {
-    auto parsed = parse_url(url);
+std::string HttpTransport::send_request(const std::string& url, const std::string& body) {
+    auto&& [host, port, path] = parse_url(url);
 
-    httplib::Client client(parsed.host, parsed.port);
-    client.set_connection_timeout(CONNECTION_TIMEOUT_SEC);
-    client.set_read_timeout(READ_TIMEOUT_SEC);
+    httplib::Client client(host, port);
+    client.set_connection_timeout(duration::connection_timeout_sec);
+    client.set_read_timeout(duration::read_timeout_sec);
 
-    auto res = client.Post(parsed.path, body, CONTENT_TYPE);
+    auto res = client.Post(path, body, http::content_type);
 
     if (!res) throw std::runtime_error("HTTP request failed: " + httplib::to_string(res.error()));
 
-    if (res->status != HTTP_STATUS_OK) throw std::runtime_error("HTTP request returned status " + std::to_string(res->status));
+    if (res->status != http_code::ok) throw std::runtime_error("HTTP request returned status " + std::to_string(res->status));
 
     return res->body;
 }
@@ -39,12 +38,12 @@ void HttpTransport::register_handler(const std::string& endpoint,
                                       httplib::Response& res) {
         try {
             std::string response = handler(req.body);
-            res.set_content(response, CONTENT_TYPE);
-            res.status = HTTP_STATUS_OK;
+            res.set_content(response, http::content_type);
+            res.status = http_code::ok;
         } catch (const std::exception& e) {
             res.set_content(R"({"error": ")" + std::string(e.what()) + "\"}",
-                          CONTENT_TYPE);
-            res.status = HTTP_STATUS_INTERNAL_ERROR;
+                          http::content_type);
+            res.status = http_code::internal_error;
         }
     });
 }
@@ -56,10 +55,10 @@ void HttpTransport::start(uint16_t port) {
     running_ = true;
 
     server_thread_ = std::thread([this]() {
-        server_->listen(ANY_ADDRESS, port_);
+        server_->listen(http::any_address, port_);
     });
 
-    std::this_thread::sleep_for(SERVER_STARTUP_DELAY);
+    std::this_thread::sleep_for(duration::server_startup_delay);
 }
 
 void HttpTransport::stop() {
@@ -91,7 +90,7 @@ HttpTransport::ParsedUrl HttpTransport::parse_url(const std::string& url) {
     };
 
     ParsedUrl parsed_url;
-    parsed_url.port = DEFAULT_HTTP_PORT;
+    parsed_url.port = http::default_port;
     parsed_url.path = path_start != std::string::npos ? url.substr(path_start) : "/";
 
     if (has_port(port_start, path_start)) {

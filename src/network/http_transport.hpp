@@ -43,17 +43,23 @@ private:
     uint16_t port_;
 
 
-    static constexpr auto DEFAULT_HTTP_PORT = 80;
-    static constexpr auto CONTENT_TYPE = "application/json";
+    struct http {
+        static constexpr auto default_port = 80;
+        static constexpr auto content_type = "text/plain";
+        static constexpr auto any_address = "0.0.0.0";
+    };
 
-    static constexpr auto CONNECTION_TIMEOUT_SEC = 5;
-    static constexpr auto READ_TIMEOUT_SEC = 10;
-    static constexpr auto SERVER_STARTUP_DELAY = std::chrono::milliseconds(100);
+    struct duration {
+        static constexpr auto connection_timeout_sec = 5;
+        static constexpr auto read_timeout_sec = 10;
+        static constexpr auto server_startup_delay = std::chrono::milliseconds(100);
+    };
 
-    static constexpr auto HTTP_STATUS_OK = 200;
-    static constexpr auto HTTP_STATUS_INTERNAL_ERROR = 500;
+    struct http_code {
+        static constexpr auto ok = 200;
+        static constexpr auto internal_error = 500;
+    };
 
-    static constexpr auto ANY_ADDRESS = "0.0.0.0";
 };
 
 }  // namespace mqpp

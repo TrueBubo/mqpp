@@ -6,6 +6,8 @@
 #include "iostream"
 #include <print>
 
+#include "shared.hpp"
+
 namespace mqpp {
 
 constexpr auto RETRY_LOOP_MAX_ATTEMPTS  = 10;
@@ -73,8 +75,8 @@ bool MessageDispatcher::deliver_to_consumer(const Message& message,
         }
 
         std::map<std::string, std::string> delivery_data;
-        delivery_data["type"] = "message";
-        delivery_data["message"] = message.serialize();
+        delivery_data[field::type] = type::message;
+        delivery_data[field::message] = message.serialize();
 
         std::string response = transport_->send_request(
             callback_url,
@@ -82,7 +84,7 @@ bool MessageDispatcher::deliver_to_consumer(const Message& message,
         );
 
         if (auto&& response_data = StringSerializer::parse(response);
-            StringSerializer::get(response_data, "status") != "ok"
+            StringSerializer::get(response_data, field::status) != status::ok
             ) return false;
 
         store_->acknowledge(message.id(), consumer_id);
@@ -113,16 +115,26 @@ void MessageDispatcher::retry_loop() const {
     }
 }
 
-void MessageDispatcher::dispatch_pending_for_consumer(const UserId& consumer_id) {
+void MessageDispatcher::dispatch_pending_for_consumer(const UserId& consumer_id) const {
     auto pending = store_->get_pending_messages_for_consumer(consumer_id);
-    for (auto&& [msg, state] : pending) {
-        deliver_to_consumer(msg, consumer_id);
+    for (auto&& [message, state] : pending) {
+        bool is_delivered = deliver_to_consumer(message, consumer_id);
+        if (!is_delivered) {
+            std::println(std::cerr,
+                "Failed to deliver message to {}:\nMessage:\n\t{}", consumer_id, message.serialize()
+                );
+        }
     }
 }
 
-void MessageDispatcher::deliver_to_consumers(const Message& msg, const std::unordered_set<UserId>& consumers) const {
+void MessageDispatcher::deliver_to_consumers(const Message& message, const std::unordered_set<UserId>& consumers) const {
     for (auto&& consumer_id : consumers) {
-        deliver_to_consumer(msg, consumer_id);
+        bool is_delivered = deliver_to_consumer(message, consumer_id);
+        if (!is_delivered) {
+            std::println(std::cerr,
+                "Failed to deliver message to {}:\nMessage:\n\t{}", consumer_id, message.serialize()
+                );
+        }
     }
 }
 

@@ -8,9 +8,9 @@
 #include <shared_mutex>
 #include <chrono>
 #include <vector>
+#include "../util/string_utils.hpp"
 
 namespace mqpp {
-
 /**
  * Tracks message's delivery and acknowledgment state
  */
@@ -87,18 +87,14 @@ private:
     void delete_message_file(const MessageId& msg_id) const;
     void update_message_file(const Message& msg, const DeliveryState& state) const;
     static std::pair<Message, DeliveryState> read_message_file(const std::filesystem::path& file);
+    static Data parse_file_data(const std::filesystem::path& file);
+    static Message parse_message(const Data& data);
+    static DeliveryState parse_delivery_state(const Data& data, const Message& msg);
 
     std::filesystem::path get_message_path(const MessageId& msg_id) const;
 
     static constexpr auto FILE_EXTENSION = ".mqpp";
     static constexpr auto TEMP_FILE_EXTENSION = ".tmp";
-
-    struct fields {
-        static constexpr auto message = "MESSAGE";
-        static constexpr auto pending = "PENDING";
-        static constexpr auto acknowledged = "ACKNOWLEDGED";
-        static constexpr auto last_retry = "LAST_RETRY";
-    };
 };
 
 }  // namespace mqpp

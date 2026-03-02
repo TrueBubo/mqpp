@@ -46,7 +46,7 @@ void Consumer::start() {
     try {
         auto&& subscribe_request = create_subscribe_request();
         std::string url = config_.broker_url + endpoint::subscribe;
-        std::string response = transport_->send_request(url, StringSerializer::serialize(subscribe_request));
+        std::string response = transport_->send_request(url, subscribe_request);
 
         if (auto response_data = StringSerializer::parse(response);
             StringSerializer::get(response_data, field::status) != status::ok
@@ -61,7 +61,7 @@ void Consumer::start() {
     }
 }
 
-std::map<std::string, std::string> Consumer::create_subscribe_request() const {
+std::string Consumer::create_subscribe_request() const {
     std::map<std::string, std::string> request;
     request[field::type] = type::subscribe;
     request[field::consumer_id] = config_.consumer_id;
@@ -71,7 +71,7 @@ std::map<std::string, std::string> Consumer::create_subscribe_request() const {
     callback_url << "http://localhost:" << config_.listen_port << endpoint::receive;
     request[field::callback_url] = callback_url.str();
 
-    return request;
+    return StringSerializer::serialize(request);
 }
 
 void Consumer::stop() {

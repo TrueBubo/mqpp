@@ -4,7 +4,8 @@
 #include "../core/types.hpp"
 #include <string>
 #include <chrono>
-#include <map>
+
+#include "util/string_utils.hpp"
 
 namespace mqpp {
 
@@ -30,10 +31,10 @@ public:
     std::chrono::system_clock::time_point timestamp() const { return timestamp_; }
 
     std::string serialize() const;
-    std::map<std::string, std::string> to_map() const;
+    Data to_map() const;
 
     static Message deserialize(const std::string& str);
-    static Message from_map(const std::map<std::string, std::string>& data);
+    static Message from_map(const Data& data);
 
 private:
     MessageId id_;

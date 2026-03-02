@@ -4,8 +4,7 @@
 #include "../core/config.hpp"
 #include "../core/types.hpp"
 #include "../message/message.hpp"
-#include "shared.hpp"
-#include <map>
+#include "../shared.hpp"
 #include <memory>
 #include <string>
 
@@ -47,12 +46,12 @@ private:
 
     /**
      * Handle incoming message delivery from broker
-     * @param request_json
+     * @param request_str
      * @return acknowledgment response
      */
-    std::string handle_incoming_message(const std::string& request_json) const;
+    std::string handle_incoming_message(const std::string& request_str) const;
     static Message parse_message(const std::string& request_str);
-    std::map<std::string, std::string> create_subscribe_request() const;
+    std::string create_subscribe_request() const;
     void process_message(const Message& msg) const;
 
     /**
