@@ -1,7 +1,7 @@
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP
 
-#include "types.hpp"
+#include "../core/types.hpp"
 #include <string>
 #include <chrono>
 #include <map>

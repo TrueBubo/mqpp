@@ -23,7 +23,7 @@ FetchContent_Declare(stduuid
 FetchContent_MakeAvailable(stduuid)
 
 set(MQPP_SOURCES
-    src/core/message.cpp
+        src/message/message.cpp
         src/client/broker.cpp
         src/subscription/subscription_manager.cpp
 

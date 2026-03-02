@@ -3,7 +3,7 @@
 
 #include "../core/config.hpp"
 #include "../core/types.hpp"
-#include "../core/message.hpp"
+#include "../message/message.hpp"
 #include <memory>
 #include <string>
 #include <atomic>

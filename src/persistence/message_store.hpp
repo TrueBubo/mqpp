@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/message.hpp"
+#include "../message/message.hpp"
 #include "../core/types.hpp"
 #include <filesystem>
 #include <unordered_set>
