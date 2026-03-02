@@ -93,10 +93,12 @@ private:
     static constexpr auto FILE_EXTENSION = ".mqpp";
     static constexpr auto TEMP_FILE_EXTENSION = ".tmp";
 
-    static constexpr auto MESSAGE = "MESSAGE";
-    static constexpr auto PENDING = "PENDING";
-    static constexpr auto ACKNOWLEDGED = "ACKNOWLEDGED";
-    static constexpr auto LAST_RETRY = "LAST_RETRY";
+    struct fields {
+        static constexpr auto message = "MESSAGE";
+        static constexpr auto pending = "PENDING";
+        static constexpr auto acknowledged = "ACKNOWLEDGED";
+        static constexpr auto last_retry = "LAST_RETRY";
+    };
 };
 
 }  // namespace mqpp

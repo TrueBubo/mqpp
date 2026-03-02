@@ -30,7 +30,7 @@ void Consumer::start() {
 
     if (!handler_) throw std::runtime_error("Message handler not set");
 
-    transport_->register_handler("/receive",
+    transport_->register_handler(endpoint::receive,
         [this](const std::string& data) {
             return handle_incoming_message(data);
     });
@@ -44,29 +44,34 @@ void Consumer::start() {
     running_ = true;
 
     try {
-        std::map<std::string, std::string> subscribe_request;
-        subscribe_request["type"] = "subscribe";
-        subscribe_request["consumer_id"] = config_.consumer_id;
-        subscribe_request["patterns"] = StringSerializer::serialize_vector(config_.topic_patterns);
-
-        std::stringstream callback_url;
-        callback_url << "http://localhost:" << config_.listen_port << "/receive";
-        subscribe_request["callback_url"] = callback_url.str();
-
-        std::string url = config_.broker_url + "/subscribe";
+        auto&& subscribe_request = create_subscribe_request();
+        std::string url = config_.broker_url + endpoint::subscribe;
         std::string response = transport_->send_request(url, StringSerializer::serialize(subscribe_request));
 
         if (auto response_data = StringSerializer::parse(response);
-            StringSerializer::get(response_data, "status") != "ok"
+            StringSerializer::get(response_data, field::status) != status::ok
         ) {
             throw std::runtime_error("Subscription failed: " +
-                StringSerializer::get(response_data, "message", "unknown error"));
+                StringSerializer::get(response_data, field::message, "unknown error"));
         }
 
     } catch (const std::exception& e) {
         stop();
         throw std::runtime_error(std::string("Failed to subscribe: ") + e.what());
     }
+}
+
+std::map<std::string, std::string> Consumer::create_subscribe_request() const {
+    std::map<std::string, std::string> request;
+    request[field::type] = type::subscribe;
+    request[field::consumer_id] = config_.consumer_id;
+    request[field::patterns] = StringSerializer::serialize_vector(config_.topic_patterns);
+
+    std::stringstream callback_url;
+    callback_url << "http://localhost:" << config_.listen_port << endpoint::receive;
+    request[field::callback_url] = callback_url.str();
+
+    return request;
 }
 
 void Consumer::stop() {
@@ -77,25 +82,30 @@ void Consumer::stop() {
 }
 
 
+Message Consumer::parse_message(const std::string& request_str) {
+    auto request = StringSerializer::parse(request_str);
+    std::string message_str = StringSerializer::get_required(request, field::message);
+    return Message::deserialize(message_str);
+}
+
+void Consumer::process_message(const Message& msg) const {
+    if (handler_) handler_(msg);
+    send_acknowledgment(msg.id());
+}
+
 std::string Consumer::handle_incoming_message(const std::string& request_str) const {
     try {
-        auto req = StringSerializer::parse(request_str);
-
-        std::string message_str = StringSerializer::get_required(req, "message");
-        Message msg = Message::deserialize(message_str);
-
-        if (handler_) handler_(msg);
-
-        send_acknowledgment(msg.id());
+        auto&& message = parse_message(request_str);
+        process_message(message);
 
         std::map<std::string, std::string> response;
-        response["status"] = "ok";
+        response[field::status] = status::ok;
         return StringSerializer::serialize(response);
 
     } catch (const std::exception& e) {
         std::map<std::string, std::string> response;
-        response["status"] = "error";
-        response["message"] = e.what();
+        response[field::status] = status::error;
+        response[field::message] = e.what();
         return StringSerializer::serialize(response);
     }
 }
@@ -103,11 +113,11 @@ std::string Consumer::handle_incoming_message(const std::string& request_str) co
 void Consumer::send_acknowledgment(const MessageId& msg_id) const {
     try {
         std::map<std::string, std::string> ack_request;
-        ack_request["type"] = "acknowledge";
-        ack_request["message_id"] = msg_id;
-        ack_request["consumer_id"] = config_.consumer_id;
+        ack_request[field::type] = type::acknowledge;
+        ack_request[field::message_id] = msg_id;
+        ack_request[field::consumer_id] = config_.consumer_id;
 
-        std::string url = config_.broker_url + "/acknowledge";
+        std::string url = config_.broker_url + endpoint::acknowledge;
         transport_->send_request(url, StringSerializer::serialize(ack_request));
 
     } catch (const std::exception& e) {

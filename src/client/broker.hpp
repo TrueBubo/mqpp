@@ -7,10 +7,6 @@
 
 namespace mqpp {
 
-constexpr auto PUBLISH_ENDPOINT     = "/publish";
-constexpr auto SUBSCRIBE_ENDPOINT   = "/subscribe";
-constexpr auto ACKNOWLEDGE_ENDPOINT = "/acknowledge";
-
 class ThreadPool;
 class ITransport;
 class SubscriptionManager;

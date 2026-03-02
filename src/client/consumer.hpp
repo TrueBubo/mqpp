@@ -4,9 +4,10 @@
 #include "../core/config.hpp"
 #include "../core/types.hpp"
 #include "../message/message.hpp"
+#include "shared.hpp"
+#include <map>
 #include <memory>
 #include <string>
-#include <atomic>
 
 namespace mqpp {
 
@@ -42,7 +43,7 @@ private:
     ConsumerConfig config_;
     std::unique_ptr<ITransport> transport_;
     MessageHandler handler_;
-    std::atomic<bool> running_;
+    bool running_;
 
     /**
      * Handle incoming message delivery from broker
@@ -50,6 +51,9 @@ private:
      * @return acknowledgment response
      */
     std::string handle_incoming_message(const std::string& request_json) const;
+    static Message parse_message(const std::string& request_str);
+    std::map<std::string, std::string> create_subscribe_request() const;
+    void process_message(const Message& msg) const;
 
     /**
      * Send acknowledgment back to broker

@@ -42,7 +42,7 @@ void MessageStore::acknowledge(const MessageId& msg_id,
         delete_message_file(msg_id);
         delivery_tracking_.erase(it);
     } else {
-        auto msg_path = get_message_path(msg_id);
+        auto&& msg_path = get_message_path(msg_id);
         auto [msg, _] = read_message_file(msg_path);
         update_message_file(msg, state);
     }
@@ -104,19 +104,19 @@ MessageStore::get_delivery_state(const MessageId& msg_id) const {
 void MessageStore::write_message_file(const Message& msg, const DeliveryState& state) const {
     std::ostringstream content;
 
-    content << MESSAGE << '=' << msg.serialize() << '\n';
+    content << fields::message << '=' << msg.serialize() << '\n';
 
     std::vector pending_vec(state.pending_consumers.begin(),
                                          state.pending_consumers.end());
-    content << PENDING << '=' << StringSerializer::serialize_vector(pending_vec) << '\n';
+    content << fields::pending << '=' << StringSerializer::serialize_vector(pending_vec) << '\n';
 
     std::vector acked_vec(state.acknowledged_consumers.begin(),
                                        state.acknowledged_consumers.end());
-    content << ACKNOWLEDGED << '=' << StringSerializer::serialize_vector(acked_vec) << '\n';
+    content << fields::acknowledged << '=' << StringSerializer::serialize_vector(acked_vec) << '\n';
 
     auto duration = state.last_retry.time_since_epoch();
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration).count();
-    content << LAST_RETRY << '=' << seconds << '\n';
+    content << fields::last_retry << '=' << seconds << '\n';
 
     auto final_path = get_message_path(msg.id());
     auto temp_path = final_path;

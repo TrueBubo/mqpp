@@ -27,10 +27,10 @@ std::string Message::serialize() const {
 
 std::map<std::string, std::string> Message::to_map() const {
     return {
-        {"id", id_},
-        {"topic", topic_},
-        {"payload", payload_},
-        {"timestamp", TimeUtil::time_point_to_string(timestamp_)}
+        {keys::id, id_},
+        {keys::topic, topic_},
+        {keys::payload, payload_},
+        {keys::timestamp, TimeUtil::time_point_to_string(timestamp_)}
     };
 }
 
@@ -40,10 +40,10 @@ Message Message::deserialize(const std::string& str) {
 
 Message Message::from_map(const std::map<std::string, std::string>& data) {
     return {
-        StringSerializer::get_required(data, "id"),
-        StringSerializer::get_required(data, "topic"),
-        StringSerializer::get_required(data, "payload"),
-        TimeUtil::string_to_time_point(StringSerializer::get_required(data, "timestamp"))
+        StringSerializer::get_required(data, keys::id),
+        StringSerializer::get_required(data, keys::topic),
+        StringSerializer::get_required(data, keys::payload),
+        TimeUtil::string_to_time_point(StringSerializer::get_required(data, keys::timestamp))
     };
 }
 

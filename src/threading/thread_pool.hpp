@@ -38,7 +38,7 @@ public:
      */
     template<typename F, typename... Args>
     auto submit(F&& f, Args&&... args)
-        -> std::future<typename std::invoke_result<F, Args...>::type>;
+        -> std::future<std::invoke_result_t<F, Args...>>;
 
     /**
      * Shutdown the thread pool

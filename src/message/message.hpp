@@ -40,6 +40,13 @@ private:
     std::string topic_;
     std::string payload_;
     std::chrono::system_clock::time_point timestamp_;
+
+    struct keys {
+        static constexpr auto id = "id";
+        static constexpr auto topic = "topic";
+        static constexpr auto payload = "payload";
+        static constexpr auto timestamp = "timestamp";
+    };
 };
 
 }  // namespace mqpp

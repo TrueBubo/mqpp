@@ -3,6 +3,8 @@
 #include "../util/string_utils.hpp"
 #include <stdexcept>
 
+#include "shared.hpp"
+
 namespace mqpp {
 
 Publisher::Publisher(const PublisherConfig& config)
@@ -15,21 +17,21 @@ Publisher::~Publisher() = default;
 MessageId Publisher::publish(const std::string& topic, const std::string& payload) const {
     try {
         std::map<std::string, std::string> request;
-        request["type"] = "publish";
-        request["topic"] = topic;
-        request["payload"] = payload;
+        request[field::type] = type::publish;
+        request[field::topic] = topic;
+        request[field::payload] = payload;
 
-        auto&& url = config_.broker_url + "/publish";
+        auto&& url = config_.broker_url + endpoint::publish;
         auto&& response = transport_->send_request(url, StringSerializer::serialize(request));
 
         auto&& response_data = StringSerializer::parse(response);
 
-        if (StringSerializer::get(response_data, "status") != "ok") {
+        if (StringSerializer::get(response_data, field::status) != status::ok) {
             throw std::runtime_error("Publish failed: " +
-                                   StringSerializer::get(response_data, "message", "unknown error"));
+                                   StringSerializer::get(response_data, field::message, "unknown error"));
         }
 
-        return StringSerializer::get_required(response_data, "message_id");
+        return StringSerializer::get_required(response_data, field::message_id);
 
     } catch (const std::exception& e) {
         throw std::runtime_error(std::string("Failed to publish message: ") + e.what());

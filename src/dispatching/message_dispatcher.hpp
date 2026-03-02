@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../message/message.hpp"
 #include "../network/transport_interface.hpp"
 #include "../persistence/message_store.hpp"
 #include <memory>
