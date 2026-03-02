@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.21)
 project(mq++ VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -49,8 +49,8 @@ target_link_libraries(mqpp PUBLIC
     pthread
 )
 
-add_executable(mq++_broker examples/broker_example.cpp)
-target_link_libraries(mq++_broker PRIVATE mqpp)
+add_executable(simple_broker examples/broker_example.cpp)
+target_link_libraries(simple_broker PRIVATE mqpp)
 
 add_executable(simple_publisher examples/publisher_example.cpp)
 target_link_libraries(simple_publisher PRIVATE mqpp)
