@@ -19,9 +19,6 @@ namespace mqpp {
  */
 class MessageDispatcher {
 public:
-    using CustomerId = std::string;
-    using CallbackUrl = std::string;
-
     MessageDispatcher(std::shared_ptr<ITransport> transport,
                      std::shared_ptr<MessageStore> store,
                      std::chrono::seconds retry_interval);
@@ -36,7 +33,7 @@ public:
      * Does not wait for acknowledgement
      */
     void dispatch(const Message& message,
-                 const std::vector<CustomerId>& consumer_ids);
+                 const std::vector<UserId>& consumer_ids);
 
     /**
      * Start the retry background thread
@@ -57,20 +54,20 @@ public:
     /**
      * Unregister consumer endpoint
      */
-    void unregister_consumer_endpoint(const CustomerId& consumer_id);
+    void unregister_consumer_endpoint(const UserId& consumer_id);
 
     /**
      * Dispatch all pending (unacknowledged) messages for a consumer.
      * Called on reconnect to flush messages missed during disconnection.
      */
-    void dispatch_pending_for_consumer(const CustomerId& consumer_id);
+    void dispatch_pending_for_consumer(const UserId& consumer_id);
 
 private:
     std::shared_ptr<ITransport> transport_;
     std::shared_ptr<MessageStore> store_;
     std::chrono::seconds retry_interval_;
 
-    std::unordered_map<CustomerId, CallbackUrl> consumer_endpoints_;
+    std::unordered_map<UserId, CallbackUrl> consumer_endpoints_;
     mutable std::mutex endpoints_mutex_;
 
     std::thread retry_thread_;
@@ -83,14 +80,14 @@ private:
      * @return Whether customer acknowledged
      */
     bool deliver_to_consumer(const Message& message,
-                            const CustomerId& consumer_id) const;
+                            const UserId& consumer_id) const;
 
     /**
      * Sends the same message to all the consumers
      * @param message Message to be sent
      * @param consumers Receivers of the message
      */
-    void deliver_to_consumers(const Message& message, const std::unordered_set<CustomerId>& consumers) const;
+    void deliver_to_consumers(const Message& message, const std::unordered_set<UserId>& consumers) const;
 
     /**
      * Retry loop - periodically checks for unacknowledged messages

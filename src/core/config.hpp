@@ -5,6 +5,8 @@
 #include <vector>
 #include <chrono>
 
+#include "types.hpp"
+
 namespace mqpp {
 
 constexpr auto BROKER_DEFAULT_PORT = 8080;
@@ -37,12 +39,12 @@ struct PublisherConfig {
  */
 struct ConsumerConfig {
     std::string broker_url;
-    std::string consumer_id;
+    UserId consumer_id;
     int listen_port;
     std::vector<std::string> topic_patterns;
 
     explicit ConsumerConfig(
-        const std::string& consumer_id,
+        const UserId& consumer_id,
         std::vector<std::string>& topic_patterns,
         const std::string& broker_url = std::format("http://localhost:{}", BROKER_DEFAULT_PORT),
         int listen_port = LISTENER_DEFAULT_PORT

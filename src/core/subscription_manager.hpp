@@ -4,6 +4,7 @@
 #include <vector>
 #include <regex>
 #include <shared_mutex>
+#include "types.hpp"
 
 namespace mqpp {
 
@@ -11,13 +12,11 @@ namespace mqpp {
  * Represents a consumer's subscription
  */
 struct Subscription {
-    std::string consumer_id;
+    UserId consumer_id;
     std::regex topic_pattern;
-    std::string pattern_string;
 
     Subscription(std::string id, const std::string& pattern)
         : consumer_id(std::move(id))
-        , pattern_string(pattern)
         , topic_pattern(pattern)
     {}
 };
@@ -34,14 +33,14 @@ public:
      * @param consumer_id
      * @param pattern Regex to match for
      */
-    void add_subscription(const std::string& consumer_id,
+    void add_subscription(const UserId& consumer_id,
                          const std::string& pattern);
 
     /**
      * Remove all subscriptions for a consumer
      * @param consumer_id
      */
-    void remove_subscription(const std::string& consumer_id);
+    void remove_subscription(const UserId& consumer_id);
 
     /**
      * Find all consumers whose patterns match the given topic

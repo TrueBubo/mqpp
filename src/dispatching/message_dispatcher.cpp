@@ -24,7 +24,7 @@ MessageDispatcher::~MessageDispatcher() {
 }
 
 void MessageDispatcher::dispatch(const Message& message,
-                                const std::vector<CustomerId>& consumer_ids) {
+                                const std::vector<UserId>& consumer_ids) {
     for (auto&& consumer_id : consumer_ids) {
         deliver_to_consumer(message, consumer_id);
     }
@@ -44,19 +44,19 @@ void MessageDispatcher::stop() {
     }
 }
 
-void MessageDispatcher::register_consumer_endpoint(const CustomerId& consumer_id,
+void MessageDispatcher::register_consumer_endpoint(const UserId& consumer_id,
                                                   const CallbackUrl& callback_url) {
     std::lock_guard lock(endpoints_mutex_);
     consumer_endpoints_[consumer_id] = callback_url;
 }
 
-void MessageDispatcher::unregister_consumer_endpoint(const CustomerId& consumer_id) {
+void MessageDispatcher::unregister_consumer_endpoint(const UserId& consumer_id) {
     std::lock_guard lock(endpoints_mutex_);
     consumer_endpoints_.erase(consumer_id);
 }
 
 bool MessageDispatcher::deliver_to_consumer(const Message& message,
-                                           const CustomerId& consumer_id) const {
+                                           const UserId& consumer_id) const {
     try {
         std::string callback_url;
         {
@@ -107,14 +107,14 @@ void MessageDispatcher::retry_loop() const {
     }
 }
 
-void MessageDispatcher::dispatch_pending_for_consumer(const CustomerId& consumer_id) {
+void MessageDispatcher::dispatch_pending_for_consumer(const UserId& consumer_id) {
     auto pending = store_->get_pending_messages_for_consumer(consumer_id);
     for (auto&& [msg, state] : pending) {
         deliver_to_consumer(msg, consumer_id);
     }
 }
 
-void MessageDispatcher::deliver_to_consumers(const Message& msg, const std::unordered_set<CustomerId>& consumers) const {
+void MessageDispatcher::deliver_to_consumers(const Message& msg, const std::unordered_set<UserId>& consumers) const {
     for (auto&& consumer_id : consumers) {
         deliver_to_consumer(msg, consumer_id);
     }

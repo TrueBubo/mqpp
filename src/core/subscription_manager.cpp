@@ -5,14 +5,14 @@
 
 namespace mqpp {
 
-void SubscriptionManager::add_subscription(const std::string& consumer_id,
+void SubscriptionManager::add_subscription(const UserId& consumer_id,
                                            const std::string& pattern) {
     std::unique_lock lock(mutex_);
 
     subscriptions_.emplace_back(consumer_id, pattern);
 }
 
-void SubscriptionManager::remove_subscription(const std::string& consumer_id) {
+void SubscriptionManager::remove_subscription(const UserId& consumer_id) {
     std::unique_lock lock(mutex_);
 
     std::erase_if(subscriptions_,
