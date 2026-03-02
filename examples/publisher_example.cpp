@@ -1,4 +1,4 @@
-#include "core/publisher.hpp"
+#include "../src/client/publisher.hpp"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
             std::print("Publishing to \"{}\": {}\n", topic, payload);
 
-            auto msg_id = publisher.publish_with_id(topic, payload);
+            auto msg_id = publisher.publish(topic, payload);
 
             std::print("\t-> Acknowledged with ID: {}\n", msg_id);
 

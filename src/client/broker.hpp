@@ -1,7 +1,7 @@
 #ifndef BROKER_HPP
 #define BROKER_HPP
 
-#include "config.hpp"
+#include "../core/config.hpp"
 #include <memory>
 #include <string>
 

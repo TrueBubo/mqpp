@@ -24,7 +24,7 @@ FetchContent_MakeAvailable(stduuid)
 
 set(MQPP_SOURCES
     src/core/message.cpp
-    src/core/broker.cpp
+        src/client/broker.cpp
     src/core/subscription_manager.cpp
 
     src/persistence/message_store.cpp

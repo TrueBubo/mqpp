@@ -1,9 +1,9 @@
 #ifndef CONSUMER_HPP
 #define CONSUMER_HPP
 
-#include "config.hpp"
-#include "types.hpp"
-#include "message.hpp"
+#include "../core/config.hpp"
+#include "../core/types.hpp"
+#include "../core/message.hpp"
 #include <memory>
 #include <string>
 #include <atomic>

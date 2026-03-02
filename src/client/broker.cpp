@@ -1,9 +1,9 @@
 #include "broker.hpp"
-#include "message.hpp"
-#include "string_utils.hpp"
+#include "../core/message.hpp"
+#include "../core/string_utils.hpp"
 #include "../threading/thread_pool.hpp"
 #include "../network/http_transport.hpp"
-#include "subscription_manager.hpp"
+#include "../core/subscription_manager.hpp"
 #include "../persistence/message_store.hpp"
 #include "../threading/message_dispatcher.hpp"
 #include <stdexcept>

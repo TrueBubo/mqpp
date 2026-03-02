@@ -1,4 +1,4 @@
-#include "../core/publisher.hpp"
+#include "publisher.hpp"
 #include "../network/http_transport.hpp"
 #include "../core/string_utils.hpp"
 #include <stdexcept>

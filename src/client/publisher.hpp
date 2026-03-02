@@ -1,8 +1,8 @@
 #ifndef PUBLISHER_HPP
 #define PUBLISHER_HPP
 
-#include "config.hpp"
-#include "types.hpp"
+#include "../core/config.hpp"
+#include "../core/types.hpp"
 #include <memory>
 #include <string>
 
@@ -24,7 +24,7 @@ public:
     /**
      * Publish a message and return the assigned message ID
      */
-    MessageId publish_with_id(const std::string& topic, const std::string& payload) const;
+    MessageId publish(const std::string& topic, const std::string& payload) const;
 
 private:
     PublisherConfig config_;
