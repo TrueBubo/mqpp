@@ -53,7 +53,7 @@ MessageStore::get_messages_for_retry(std::chrono::seconds retry_interval) {
     std::shared_lock lock(mutex_);
 
     std::vector<std::pair<Message, DeliveryState>> messages;
-    auto now = std::chrono::system_clock::now();
+    auto&& now = std::chrono::system_clock::now();
 
     for (const auto& [msg_id, state] : delivery_tracking_) {
         if (!state.pending_consumers.empty() && (now - state.last_retry) >= retry_interval) {
@@ -74,7 +74,7 @@ MessageStore::load_all_messages() {
     std::vector<std::pair<Message, DeliveryState>> messages;
 
     for (const auto& entry : std::filesystem::directory_iterator(storage_dir_)) {
-        if (entry.path().extension() == ".txt") {
+        if (entry.path().extension() == FILE_EXTENSION) {
             try {
                 auto [msg, state] = read_message_file(entry.path());
                 messages.emplace_back(msg, state);
@@ -101,26 +101,26 @@ MessageStore::get_delivery_state(const MessageId& msg_id) const {
     return std::nullopt;
 }
 
-void MessageStore::write_message_file(const Message& msg, const DeliveryState& state) {
+void MessageStore::write_message_file(const Message& msg, const DeliveryState& state) const {
     std::ostringstream content;
 
-    content << "MESSAGE=" << msg.serialize() << "\n";
+    content << MESSAGE << '=' << msg.serialize() << '\n';
 
     std::vector pending_vec(state.pending_consumers.begin(),
                                          state.pending_consumers.end());
-    content << "PENDING=" << StringSerializer::serialize_vector(pending_vec) << "\n";
+    content << PENDING << '=' << StringSerializer::serialize_vector(pending_vec) << '\n';
 
     std::vector acked_vec(state.acknowledged_consumers.begin(),
                                        state.acknowledged_consumers.end());
-    content << "ACKNOWLEDGED=" << StringSerializer::serialize_vector(acked_vec) << "\n";
+    content << ACKNOWLEDGED << '=' << StringSerializer::serialize_vector(acked_vec) << '\n';
 
     auto duration = state.last_retry.time_since_epoch();
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration).count();
-    content << "LAST_RETRY=" << seconds << "\n";
+    content << LAST_RETRY << '=' << seconds << '\n';
 
     auto final_path = get_message_path(msg.id());
     auto temp_path = final_path;
-    temp_path += ".tmp";
+    temp_path += TEMP_FILE_EXTENSION;
 
     {
         std::ofstream file(temp_path);
@@ -134,19 +134,18 @@ void MessageStore::write_message_file(const Message& msg, const DeliveryState& s
     std::filesystem::rename(temp_path, final_path);
 }
 
-void MessageStore::update_message_file(const Message& msg, const DeliveryState& state) {
+void MessageStore::update_message_file(const Message& msg, const DeliveryState& state) const {
     write_message_file(msg, state);
 }
 
-void MessageStore::delete_message_file(const MessageId& msg_id) {
+void MessageStore::delete_message_file(const MessageId& msg_id) const {
     auto path = get_message_path(msg_id);
     if (std::filesystem::exists(path)) {
         std::filesystem::remove(path);
     }
 }
 
-std::pair<Message, DeliveryState>
-MessageStore::read_message_file(const std::filesystem::path& file) {
+std::pair<Message, DeliveryState> MessageStore::read_message_file(const std::filesystem::path& file) {
     std::ifstream input(file);
     if (!input) {
         throw std::runtime_error("Failed to open file for reading: " + file.string());
@@ -208,7 +207,7 @@ MessageStore::get_pending_messages_for_consumer(const std::string& consumer_id) 
 }
 
 std::filesystem::path MessageStore::get_message_path(const MessageId& msg_id) const {
-    return storage_dir_ / (msg_id + ".txt");
+    return storage_dir_ / (msg_id + FILE_EXTENSION);
 }
 
 }  // namespace mqpp

@@ -83,12 +83,20 @@ private:
 
     std::unordered_map<MessageId, DeliveryState> delivery_tracking_;
 
-    void write_message_file(const Message& msg, const DeliveryState& state);
-    void delete_message_file(const MessageId& msg_id);
-    void update_message_file(const Message& msg, const DeliveryState& state);
-    std::pair<Message, DeliveryState> read_message_file(const std::filesystem::path& file);
+    void write_message_file(const Message& msg, const DeliveryState& state) const;
+    void delete_message_file(const MessageId& msg_id) const;
+    void update_message_file(const Message& msg, const DeliveryState& state) const;
+    static std::pair<Message, DeliveryState> read_message_file(const std::filesystem::path& file);
 
     std::filesystem::path get_message_path(const MessageId& msg_id) const;
+
+    static constexpr auto FILE_EXTENSION = ".mqpp";
+    static constexpr auto TEMP_FILE_EXTENSION = ".tmp";
+
+    static constexpr auto MESSAGE = "MESSAGE";
+    static constexpr auto PENDING = "PENDING";
+    static constexpr auto ACKNOWLEDGED = "ACKNOWLEDGED";
+    static constexpr auto LAST_RETRY = "LAST_RETRY";
 };
 
 }  // namespace mqpp
