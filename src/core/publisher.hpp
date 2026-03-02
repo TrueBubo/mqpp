@@ -22,11 +22,6 @@ public:
     Publisher& operator=(const Publisher&) = delete;
 
     /**
-     * Publish a message to a topic
-     */
-    MessageId publish(const std::string& topic, const std::string& payload) const;
-
-    /**
      * Publish a message and return the assigned message ID
      */
     MessageId publish_with_id(const std::string& topic, const std::string& payload) const;

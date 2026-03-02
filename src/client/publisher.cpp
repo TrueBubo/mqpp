@@ -13,10 +13,6 @@ Publisher::Publisher(const PublisherConfig& config)
 Publisher::~Publisher() = default;
 
 MessageId Publisher::publish(const std::string& topic, const std::string& payload) const {
-    return publish_with_id(topic, payload);
-}
-
-MessageId Publisher::publish_with_id(const std::string& topic, const std::string& payload) const {
     try {
         std::map<std::string, std::string> request;
         request["type"] = "publish";
