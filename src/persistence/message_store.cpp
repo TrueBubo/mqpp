@@ -91,8 +91,7 @@ MessageStore::load_all_messages() {
     return messages;
 }
 
-std::optional<DeliveryState>
-MessageStore::get_delivery_state(const MessageId& msg_id) const {
+std::optional<DeliveryState> MessageStore::get_delivery_state(const MessageId& msg_id) const {
     std::shared_lock lock(mutex_);
 
     auto it = delivery_tracking_.find(msg_id);

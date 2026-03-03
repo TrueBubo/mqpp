@@ -62,14 +62,13 @@ void Consumer::start() {
 }
 
 std::string Consumer::create_subscribe_request() const {
-    std::map<std::string, std::string> request;
+    Data request;
     request[field::type] = type::subscribe;
     request[field::consumer_id] = config_.consumer_id;
     request[field::patterns] = StringSerializer::serialize_vector(config_.topic_patterns);
 
-    std::stringstream callback_url;
-    callback_url << "http://localhost:" << config_.listen_port << endpoint::receive;
-    request[field::callback_url] = callback_url.str();
+    auto&& callback_url = std::format("http://localhost:{}{}", config_.listen_port, endpoint::receive);
+    request[field::callback_url] = callback_url;
 
     return StringSerializer::serialize(request);
 }
