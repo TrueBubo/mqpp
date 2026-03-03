@@ -45,7 +45,7 @@ void MessageStore::acknowledge(const MessageId& msg_id,
     } else {
         auto&& msg_path = get_message_path(msg_id);
         auto [msg, _] = read_message_file(msg_path);
-        update_message_file(msg, state);
+        write_message_file(msg, state);
     }
 }
 
@@ -133,10 +133,6 @@ void MessageStore::write_message_file(const Message& msg, const DeliveryState& s
     }
 
     std::filesystem::rename(temp_path, final_path);
-}
-
-void MessageStore::update_message_file(const Message& msg, const DeliveryState& state) const {
-    write_message_file(msg, state);
 }
 
 void MessageStore::delete_message_file(const MessageId& msg_id) const {

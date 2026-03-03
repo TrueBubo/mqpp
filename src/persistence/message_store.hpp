@@ -85,7 +85,6 @@ private:
 
     void write_message_file(const Message& msg, const DeliveryState& state) const;
     void delete_message_file(const MessageId& msg_id) const;
-    void update_message_file(const Message& msg, const DeliveryState& state) const;
     static std::pair<Message, DeliveryState> read_message_file(const std::filesystem::path& file);
     static Data parse_file_data(const std::filesystem::path& file);
     static Message parse_message(const Data& data);
