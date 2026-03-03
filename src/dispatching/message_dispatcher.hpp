@@ -79,8 +79,7 @@ private:
      * @param consumer_id Customer to which the message is sent
      * @return Whether customer acknowledged
      */
-    bool deliver_to_consumer(const Message& message,
-                            const UserId& consumer_id) const;
+    bool deliver_to_consumer(const Message& message, const UserId& consumer_id) const;
 
     /**
      * Sends the same message to all the consumers
@@ -88,6 +87,8 @@ private:
      * @param consumers Receivers of the message
      */
     void deliver_to_consumers(const Message& message, const std::unordered_set<UserId>& consumers) const;
+
+    void deliver_to_consumer_logged(const Message& message, const UserId& consumer_id) const;
 
     /**
      * Retry loop - periodically checks for unacknowledged messages

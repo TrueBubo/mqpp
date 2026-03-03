@@ -26,15 +26,9 @@ MessageDispatcher::~MessageDispatcher() {
     stop();
 }
 
-void MessageDispatcher::dispatch(const Message& message,
-                                const std::vector<UserId>& consumer_ids) const {
+void MessageDispatcher::dispatch(const Message& message, const std::vector<UserId>& consumer_ids) const {
     for (auto&& consumer_id : consumer_ids) {
-        auto&& is_delivered = deliver_to_consumer(message, consumer_id);
-        if (!is_delivered) {
-            std::println(std::cerr,
-                "Failed to deliver message to {}:\nMessage:\n\t{}", consumer_id, message.serialize()
-                );
-        }
+        deliver_to_consumer_logged(message, consumer_id);
     }
 }
 
@@ -118,24 +112,22 @@ void MessageDispatcher::retry_loop() const {
 void MessageDispatcher::dispatch_pending_for_consumer(const UserId& consumer_id) const {
     auto pending = store_->get_pending_messages_for_consumer(consumer_id);
     for (auto&& [message, state] : pending) {
-        bool is_delivered = deliver_to_consumer(message, consumer_id);
-        if (!is_delivered) {
-            std::println(std::cerr,
-                "Failed to deliver message to {}:\nMessage:\n\t{}", consumer_id, message.serialize()
-                );
-        }
+        deliver_to_consumer_logged(message, consumer_id);
     }
 }
 
 void MessageDispatcher::deliver_to_consumers(const Message& message, const std::unordered_set<UserId>& consumers) const {
     for (auto&& consumer_id : consumers) {
-        bool is_delivered = deliver_to_consumer(message, consumer_id);
-        if (!is_delivered) {
-            std::println(std::cerr,
-                "Failed to deliver message to {}:\nMessage:\n\t{}", consumer_id, message.serialize()
-                );
-        }
+        deliver_to_consumer_logged(message, consumer_id);
     }
 }
 
+void MessageDispatcher::deliver_to_consumer_logged(const Message &message, const UserId &consumer_id) const {
+    bool is_delivered = deliver_to_consumer(message, consumer_id);
+    if (!is_delivered) {
+        std::println(std::cerr,
+            "Failed to deliver message to {}:\nMessage:\n\t{}", consumer_id, message.serialize()
+            );
+    }
+}
 }  // namespace mqpp
