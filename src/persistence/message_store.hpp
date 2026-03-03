@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MESSAGE_STORE_HPP
+#define MESSAGE_STORE_HPP
 
 #include "../message/message.hpp"
 #include "../core/types.hpp"
@@ -97,3 +98,5 @@ private:
 };
 
 }  // namespace mqpp
+
+#endif // MESSAGE_STORE_HPP

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SUBSCRIPTION_MANAGER_HPP
+#define SUBSCRIPTION_MANAGER_HPP
 
 #include <string>
 #include <vector>
@@ -60,3 +61,5 @@ private:
 };
 
 }  // namespace mqpp
+
+#endif // SUBSCRIPTION_MANAGER_HPP

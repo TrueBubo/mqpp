@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MESSAGE_DISPATCHER_HPP
+#define MESSAGE_DISPATCHER_HPP
 
 #include "../network/transport_interface.hpp"
 #include "../persistence/message_store.hpp"
@@ -95,3 +96,4 @@ private:
 };
 
 }  // namespace mqpp
+#endif // MESSAGE_DISPATCHER_HPP

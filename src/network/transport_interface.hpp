@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRANSPORT_INTERFACE_HPP
+#define TRANSPORT_INTERFACE_HPP
 
 #include <string>
 #include <functional>
@@ -50,3 +51,5 @@ public:
 };
 
 }  // namespace mqpp
+
+#endif // TRANSPORT_INTERFACE_HPP

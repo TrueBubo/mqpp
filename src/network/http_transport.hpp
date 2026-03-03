@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HTTP_TRANSPORT_HPP
+#define HTTP_TRANSPORT_HPP
 
 #include "transport_interface.hpp"
 #include <httplib.h>
@@ -63,3 +64,5 @@ private:
 };
 
 }  // namespace mqpp
+
+#endif // HTTP_TRANSPORT_HPP
