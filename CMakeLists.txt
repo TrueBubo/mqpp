@@ -34,11 +34,10 @@ set(MQPP_SOURCES
     src/client/publisher.cpp
     src/client/consumer.cpp
 
-    src/threading/thread_pool.cpp
-        src/dispatching/message_dispatcher.cpp
-        examples/consumer_example.cpp
-        src/util/time_util.hpp
-        src/util/uuid_util.hpp
+    src/dispatching/message_dispatcher.cpp
+    examples/consumer_example.cpp
+    src/util/time_util.hpp
+    src/util/uuid_util.hpp
 )
 
 add_library(mqpp ${MQPP_SOURCES})

@@ -39,7 +39,6 @@ public:
 private:
     BrokerConfig config_;
 
-    std::unique_ptr<ThreadPool> thread_pool_;
     std::unique_ptr<ITransport> transport_;
     std::unique_ptr<SubscriptionManager> subscription_mgr_;
     std::unique_ptr<MessageStore> message_store_;

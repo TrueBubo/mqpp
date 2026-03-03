@@ -2,7 +2,6 @@
 #include "../shared.hpp"
 #include "../message/message.hpp"
 #include "../util/string_utils.hpp"
-#include "../threading/thread_pool.hpp"
 #include "../network/http_transport.hpp"
 #include "../subscription/subscription_manager.hpp"
 #include "../persistence/message_store.hpp"
@@ -15,7 +14,6 @@ Broker::Broker(const BrokerConfig& config)
     : config_(config)
     , running_(false)
 {
-    thread_pool_ = std::make_unique<ThreadPool>(config_.num_threads);
     transport_ = std::make_unique<HttpTransport>();
     subscription_mgr_ = std::make_unique<SubscriptionManager>();
     message_store_ = std::make_unique<MessageStore>(config_.storage_dir);
