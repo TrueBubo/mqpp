@@ -4,6 +4,7 @@
 #include <sstream>
 #include <print>
 #include <mutex>
+#include <ranges>
 
 #include "shared.hpp"
 
@@ -51,17 +52,20 @@ void MessageStore::acknowledge(const MessageId& msg_id,
 
 std::vector<std::pair<Message, DeliveryState>>
 MessageStore::get_messages_for_retry(std::chrono::seconds retry_interval) {
-    std::shared_lock lock(mutex_);
+    std::unique_lock lock(mutex_);
 
     std::vector<std::pair<Message, DeliveryState>> messages;
     auto&& now = std::chrono::system_clock::now();
 
-    for (const auto& [msg_id, state] : delivery_tracking_) {
+    for (auto&& [msg_id, state] : delivery_tracking_) {
         if (!state.pending_consumers.empty() && (now - state.last_retry) >= retry_interval) {
-            auto msg_path = get_message_path(msg_id);
-            auto [msg, current_state] = read_message_file(msg_path);
+            auto&& msg_path = get_message_path(msg_id);
+            auto&& [msg, _] = read_message_file(msg_path);
 
-            messages.emplace_back(std::move(msg), current_state);
+            state.last_retry = now;
+            write_message_file(msg, state);
+
+            messages.emplace_back(std::move(msg), state);
         }
     }
 
@@ -148,8 +152,7 @@ std::pair<Message, DeliveryState> MessageStore::read_message_file(const std::fil
     return {std::move(msg), std::move(state)};
 }
 
-std::vector<std::pair<Message, DeliveryState>>
-MessageStore::get_pending_messages_for_consumer(const std::string& consumer_id) {
+std::vector<std::pair<Message, DeliveryState>> MessageStore::get_pending_messages_for_consumer(const std::string& consumer_id) {
     std::shared_lock lock(mutex_);
 
     std::vector<std::pair<Message, DeliveryState>> messages;
@@ -162,6 +165,31 @@ MessageStore::get_pending_messages_for_consumer(const std::string& consumer_id) 
     }
 
     return messages;
+}
+
+std::vector<std::pair<MessageId, std::string>> MessageStore::get_all_message_topics() const {
+    std::shared_lock lock(mutex_);
+
+    return delivery_tracking_ | std::views::transform([](auto&& entry) {
+        auto&& [message_id, state] = entry;
+        return std::pair{message_id, state.topic};
+    }) | std::ranges::to<std::vector>();
+}
+
+void MessageStore::add_pending_consumer(const MessageId& msg_id, const UserId& consumer_id) {
+    std::unique_lock lock(mutex_);
+
+    auto it = delivery_tracking_.find(msg_id);
+    if (it == delivery_tracking_.end()) return;
+
+    auto& state = it->second;
+    if (state.pending_consumers.contains(consumer_id) ||
+        state.acknowledged_consumers.contains(consumer_id)) return;
+
+    state.pending_consumers.insert(consumer_id);
+
+    auto [msg, _] = read_message_file(get_message_path(msg_id));
+    write_message_file(msg, state);
 }
 
 std::filesystem::path MessageStore::get_message_path(const MessageId& msg_id) const {

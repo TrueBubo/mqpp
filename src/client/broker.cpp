@@ -7,6 +7,7 @@
 #include "../persistence/message_store.hpp"
 #include "../dispatching/message_dispatcher.hpp"
 #include <stdexcept>
+#include <algorithm>
 
 namespace mqpp {
 
@@ -78,8 +79,9 @@ std::string Broker::handle_publish(const std::string& request_str) const {
 
         auto&& consumers = subscription_mgr_->find_matching_consumers(topic);
 
+        message_store_->persist_message(message, consumers);
+
         if (!consumers.empty()) {
-            message_store_->persist_message(message, consumers);
             dispatcher_->dispatch(message, consumers);
         }
 
@@ -97,6 +99,13 @@ std::string Broker::handle_subscribe(const std::string& request_str) const {
         dispatcher_->register_consumer_endpoint(consumer_id, callback_url);
 
         for (auto&& pattern : patterns) subscription_mgr_->add_subscription(consumer_id, pattern);
+
+        for (const auto& [msg_id, topic] : message_store_->get_all_message_topics()) {
+            auto matching = subscription_mgr_->find_matching_consumers(topic);
+            if (std::ranges::find(matching, consumer_id) != matching.end()) {
+                message_store_->add_pending_consumer(msg_id, consumer_id);
+            }
+        }
 
         dispatcher_->dispatch_pending_for_consumer(consumer_id);
 

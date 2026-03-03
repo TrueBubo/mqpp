@@ -78,6 +78,18 @@ public:
     std::vector<std::pair<Message, DeliveryState>> get_pending_messages_for_consumer(
         const std::string& consumer_id);
 
+    /**
+     * Returns (MessageId, topic) for every tracked message.
+     * Used to match stored messages against a newly subscribed consumer's patterns.
+     */
+    std::vector<std::pair<MessageId, std::string>> get_all_message_topics() const;
+
+    /**
+     * Add consumer_id to a message's pending set if not already pending/acknowledged.
+     * Persists the updated state to disk.
+     */
+    void add_pending_consumer(const MessageId& msg_id, const UserId& consumer_id);
+
 private:
     std::filesystem::path storage_dir_;
     mutable std::shared_mutex mutex_; // allows locking/unlocking in const context
