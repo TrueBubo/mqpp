@@ -26,7 +26,7 @@ public:
     void start(uint16_t port) override;
     void stop() override;
 
-    uint16_t get_port() const override;
+    uint16_t port() const override;
 
 private:
     struct ParsedUrl {

@@ -70,7 +70,7 @@ void HttpTransport::stop() {
     if (server_thread_.joinable()) server_thread_.join();
 }
 
-uint16_t HttpTransport::get_port() const {
+uint16_t HttpTransport::port() const {
     return port_;
 }
 

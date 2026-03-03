@@ -38,7 +38,7 @@ void Consumer::start() {
     transport_->start(config_.listen_port);
 
     if (config_.listen_port == LISTENER_DEFAULT_PORT) {
-        config_.listen_port = transport_->get_port();
+        config_.listen_port = transport_->port();
     }
 
     running_ = true;

@@ -47,7 +47,7 @@ public:
      * Get the port this transport is listening on
      * Returns 0 if not started
      */
-    virtual uint16_t get_port() const = 0;
+    virtual uint16_t port() const = 0;
 };
 
 }  // namespace mqpp

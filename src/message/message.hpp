@@ -30,10 +30,30 @@ public:
     const std::string& payload() const { return payload_; }
     std::chrono::system_clock::time_point timestamp() const { return timestamp_; }
 
+    /**
+     * Transforms the message using @class StringSerializer
+     * @return String representation of the message
+     */
     std::string serialize() const;
+
+    /**
+     * Changes the object properties to key value pairs for easier serialization
+     * @return Map of keys and values
+     */
     Data to_map() const;
 
+    /**
+     *
+     * @param str Serialized message
+     * @return Parsed message
+     */
     static Message deserialize(const std::string& str);
+
+    /**
+     * Creates a message object from key value map
+     * @param data Map of message properties as keys and values
+     * @return Converted Message
+     */
     static Message from_map(const Data& data);
 
 private:

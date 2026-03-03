@@ -20,8 +20,7 @@ void SubscriptionManager::remove_subscription(const UserId& consumer_id) {
                   });
 }
 
-std::vector<std::string>
-SubscriptionManager::find_matching_consumers(const std::string& topic) const {
+std::vector<UserId> SubscriptionManager::find_matching_consumers(const std::string& topic) const {
     std::shared_lock lock(mutex_);
 
     auto&& matching = subscriptions_
@@ -34,8 +33,7 @@ SubscriptionManager::find_matching_consumers(const std::string& topic) const {
     return matching;
 }
 
-std::vector<Subscription>
-SubscriptionManager::get_all_subscriptions() const {
+std::vector<Subscription> SubscriptionManager::get_all_subscriptions() const {
     std::shared_lock lock(mutex_);
     return subscriptions_;
 }

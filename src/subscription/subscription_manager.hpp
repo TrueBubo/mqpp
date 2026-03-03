@@ -31,7 +31,7 @@ public:
 
     /**
      * Add a subscription for a consumer with a regex pattern
-     * @param consumer_id
+     * @param consumer_id user who requested subscription
      * @param pattern Regex to match for
      */
     void add_subscription(const UserId& consumer_id,
@@ -39,15 +39,16 @@ public:
 
     /**
      * Remove all subscriptions for a consumer
-     * @param consumer_id
+     * @param consumer_id user who requested removal of subscription
      */
     void remove_subscription(const UserId& consumer_id);
 
     /**
      * Find all consumers whose patterns match the given topic
+     * @param topic Topic for which to retrieve consumers
      * @return consumer IDs
      */
-    std::vector<std::string> find_matching_consumers(const std::string& topic) const;
+    std::vector<UserId> find_matching_consumers(const std::string& topic) const;
 
     /**
      * Get all subscriptions
