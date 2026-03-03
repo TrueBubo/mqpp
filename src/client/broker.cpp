@@ -14,13 +14,13 @@ Broker::Broker(const BrokerConfig& config)
     : config_(config)
     , running_(false)
 {
-    transport_ = std::make_unique<HttpTransport>();
+    transport_ = std::make_shared<HttpTransport>();
     subscription_mgr_ = std::make_unique<SubscriptionManager>();
-    message_store_ = std::make_unique<MessageStore>(config_.storage_dir);
+    message_store_ = std::make_shared<MessageStore>(config_.storage_dir);
 
     dispatcher_ = std::make_unique<MessageDispatcher>(
-        std::shared_ptr<ITransport>(transport_.get(), [](ITransport*){}),
-        std::shared_ptr<MessageStore>(message_store_.get(), [](MessageStore*){}),
+        transport_,
+        message_store_,
         config_.retry_interval
     );
 

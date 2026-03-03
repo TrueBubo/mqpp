@@ -7,7 +7,6 @@
 
 namespace mqpp {
 
-class ThreadPool;
 class ITransport;
 class SubscriptionManager;
 class MessageStore;
@@ -39,9 +38,9 @@ public:
 private:
     BrokerConfig config_;
 
-    std::unique_ptr<ITransport> transport_;
+    std::shared_ptr<ITransport> transport_;
     std::unique_ptr<SubscriptionManager> subscription_mgr_;
-    std::unique_ptr<MessageStore> message_store_;
+    std::shared_ptr<MessageStore> message_store_;
     std::unique_ptr<MessageDispatcher> dispatcher_;
 
     bool running_;
