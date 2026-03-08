@@ -1,0 +1,8 @@
+PROJECT_NAME           = "mq++"
+PROJECT_VERSION        = "1.0.0"
+INPUT                  = src/
+OUTPUT_DIRECTORY       = docs/
+EXTRACT_ALL            = YES
+RECURSIVE              = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
