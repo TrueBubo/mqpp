@@ -5,7 +5,6 @@
 #include <atomic>
 #include <thread>
 #include <chrono>
-#include <print>
 
 constexpr auto SUCCESS_EXIT_CODE = 0;
 constexpr auto ERROR_EXIT_CODE = 1;

@@ -15,14 +15,14 @@ MQ++ is the message queue implementation in C++
 - `cmake -B build -S . && cmake --build build`
 
 ## Running
-There are example programs utilizing this library in `examples/`
+There are example programs utilizing this library in `examples/`  
 
-First you need to start broker
+First you need to start broker  
 `./build/simple_broker`
 
-Then consumer
+Then consumer  
 `./build/simple_consumer`
 
-Then producer
+Then producer  
 `./build/simple_publisher`
 
