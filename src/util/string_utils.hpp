@@ -17,6 +17,11 @@ using Data = std::map<std::string, std::string>;
  */
 class StringSerializer {
 public:
+    /**
+     * Parse the string representation of an object to map
+     * @param str string representation of an object
+     * @return Map of keys with their values
+     */
     static Data parse(const std::string& str) {
         Data result;
         std::string current_key;
@@ -56,6 +61,11 @@ public:
         return result;
     }
 
+    /**
+     * Serialize map of keys and values into its string serialization
+     * @param data map of keys and values
+     * @return String representation of the object
+     */
     static std::string serialize(const Data& data) {
         std::ostringstream oss;
         bool first = true;
@@ -69,13 +79,27 @@ public:
         return oss.str();
     }
 
+    /**
+     * Returns the value the @param key has, or if it does not it returns @param default_value
+     * @param data Map of the keys and values
+     * @param key What to look for
+     * @param default_value Returns this if the key was not found
+     * @return the value
+     */
     static std::string get(const Data& data,
-                          const std::string& key,
-                          const std::string& default_value = "") {
+                           const std::string& key,
+                           const std::string& default_value = "") {
         auto&& entry = data.find(key);
         return (entry != data.end()) ? entry->second : default_value;
     }
 
+    /**
+     * Returns the value the @param key has, or throws an exception
+     * @param data Map of the keys and values
+     * @param key What to look for
+     * @throws std::runtime_error If not found
+     * @return the value
+     */
     static std::string get_required(const Data& data,
                                     const std::string& key) {
         auto&& entry = data.find(key);
@@ -85,6 +109,11 @@ public:
         return entry->second;
     }
 
+    /**
+     * Serializes the @param vec into the string
+     * @param vec Vector to be serialized
+     * @return String representation of the vector
+     */
     static std::string serialize_vector(const std::vector<std::string>& vec) {
         std::ostringstream oss;
         bool first = true;
@@ -96,6 +125,11 @@ public:
         return oss.str();
     }
 
+    /**
+     * Parses the vector from the string form it was serialized to by @method serialize_vector
+     * @param str String form of the vector
+     * @return parsed vector
+     */
     static std::vector<std::string> parse_vector(const std::string& str) {
         std::vector<std::string> result;
         std::string current;
