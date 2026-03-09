@@ -18,7 +18,6 @@ constexpr auto LISTENER_DEFAULT_PORT = 9090;
 struct BrokerConfig {
     uint16_t port = BROKER_DEFAULT_PORT;
     std::string storage_dir = "./.data/messages";
-    size_t num_threads = 4;
     std::chrono::seconds retry_interval{30};
 };
 
