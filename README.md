@@ -4,6 +4,7 @@ MQ++ is the message queue implementation in C++
 ## Features:
 - Cross network communication
 - Adaptable payload format
+- Regex based subscriptions
 - Message durability
 
 ## Prerequisites:
