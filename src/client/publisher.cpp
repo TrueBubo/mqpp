@@ -3,7 +3,7 @@
 #include "../util/string_utils.hpp"
 #include <stdexcept>
 
-#include "../shared.hpp"
+#include "../core/shared.hpp"
 
 namespace mqpp {
 

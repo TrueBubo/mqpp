@@ -6,7 +6,7 @@
 #include "iostream"
 #include <print>
 
-#include "shared.hpp"
+#include "../core/shared.hpp"
 
 namespace mqpp {
 

@@ -6,7 +6,7 @@
 #include <mutex>
 #include <ranges>
 
-#include "shared.hpp"
+#include "../core/shared.hpp"
 
 namespace mqpp {
 

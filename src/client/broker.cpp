@@ -1,5 +1,5 @@
 #include "broker.hpp"
-#include "../shared.hpp"
+#include "../core/shared.hpp"
 #include "../message/message.hpp"
 #include "../util/string_utils.hpp"
 #include "../network/http_transport.hpp"

@@ -4,7 +4,7 @@
 #include "../core/config.hpp"
 #include "../core/types.hpp"
 #include "../message/message.hpp"
-#include "../shared.hpp"
+#include "../core/shared.hpp"
 #include <memory>
 #include <string>
 

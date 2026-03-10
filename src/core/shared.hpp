@@ -1,6 +1,6 @@
 #ifndef ENDPOINTS_HPP
 #define ENDPOINTS_HPP
-#include "util/string_utils.hpp"
+#include "../util/string_utils.hpp"
 
 namespace mqpp {
 
