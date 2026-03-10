@@ -4,14 +4,14 @@
 
 namespace mqpp {
 
-struct endpoint {
+namespace endpoint {
     static constexpr auto publish = "/publish";
     static constexpr auto subscribe = "/subscribe";
     static constexpr auto acknowledge = "/acknowledge";
     static constexpr auto receive = "/receive";
 };
 
-struct field {
+namespace field {
     static constexpr auto type = "type";
     static constexpr auto status = "status";
     static constexpr auto message = "message";
@@ -27,14 +27,14 @@ struct field {
     static constexpr auto last_retry = "LAST_RETRY";
 };
 
-struct type {
+namespace type {
     static constexpr auto subscribe = "subscribe";
     static constexpr auto publish = "publish";
     static constexpr auto acknowledge = "acknowledge";
     static constexpr auto message = "message";
 };
 
-struct status {
+namespace status {
     static constexpr auto ok = "ok";
     static constexpr auto error = "error";
 };
