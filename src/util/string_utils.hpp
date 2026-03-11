@@ -165,6 +165,11 @@ public:
     }
 
 private:
+    /**
+     * Escapes the special characters in string
+     * @param str To be escaped
+     * @return Escaped string
+     */
     static std::string escape(const std::string& str) {
         std::string result;
         for (char c : str) {
@@ -176,6 +181,11 @@ private:
         return result;
     }
 
+    /**
+     * Escapes item separator in collections
+     * @param str To be escaped
+     * @return Escaped string
+     */
     static std::string escape_item_separators(const std::string& str) {
         std::string result;
         for (char c : str) {
@@ -187,6 +197,11 @@ private:
         return result;
     }
 
+    /**
+     * Creates an exception for missing required data
+     * @param key Missing key
+     * @return Exception
+     */
     static std::runtime_error missing_required_field_exception(const std::string& key) {
         return std::runtime_error("Missing required field: " + key);
     }

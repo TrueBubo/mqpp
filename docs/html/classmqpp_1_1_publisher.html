@@ -100,13 +100,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0312fc0891ecbfd61736ea31bfb3c116" id="r_a0312fc0891ecbfd61736ea31bfb3c116"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0312fc0891ecbfd61736ea31bfb3c116">~Publisher</a> ()</td></tr>
 <tr class="memitem:a9a19275fb81bd7c395b318217440caad" id="r_a9a19275fb81bd7c395b318217440caad"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9a19275fb81bd7c395b318217440caad">Publisher</a> (const Publisher &amp;)=delete</td></tr>
 <tr class="memitem:ab007b929013768745268eb4ae7806bcd" id="r_ab007b929013768745268eb4ae7806bcd"><td class="memItemLeft"><a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab007b929013768745268eb4ae7806bcd">operator=</a> (const <a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp;)=delete</td></tr>
+<tr class="memitem:a10e24b16e536f4f6e187e9f1950c5bc5" id="r_a10e24b16e536f4f6e187e9f1950c5bc5"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a10e24b16e536f4f6e187e9f1950c5bc5">Publisher</a> (Publisher &amp;&amp;)=delete</td></tr>
+<tr class="memitem:af11b5d6a409492682a17030b417d63b2" id="r_af11b5d6a409492682a17030b417d63b2"><td class="memItemLeft"><a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af11b5d6a409492682a17030b417d63b2">operator=</a> (<a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp;&amp;)=delete</td></tr>
 <tr class="memitem:a5e722ba3f2bb84dd4200d968e06280aa" id="r_a5e722ba3f2bb84dd4200d968e06280aa"><td class="memItemLeft"><a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5e722ba3f2bb84dd4200d968e06280aa">publish</a> (const std::string &amp;topic, const std::string &amp;payload) const</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classmqpp_1_1_publisher.html">Publisher</a> client for sending messages to the broker </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad25dad7a2f2872b5ceeb09f37665a987" name="ad25dad7a2f2872b5ceeb09f37665a987"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad25dad7a2f2872b5ceeb09f37665a987">&#9670;&#160;</a></span>Publisher() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad25dad7a2f2872b5ceeb09f37665a987">&#9670;&#160;</a></span>Publisher() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,6 +129,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Setups the publisher to a valid state </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Contains the values used in initialization of <a class="el" href="classmqpp_1_1_publisher.html">Publisher</a> members </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -152,11 +160,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Ensures the <a class="el" href="classmqpp_1_1_publisher.html">Publisher</a> and its members are gracefully shutdown </p>
 
 </div>
 </div>
 <a id="a9a19275fb81bd7c395b318217440caad" name="a9a19275fb81bd7c395b318217440caad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a19275fb81bd7c395b318217440caad">&#9670;&#160;</a></span>Publisher() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a19275fb81bd7c395b318217440caad">&#9670;&#160;</a></span>Publisher() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,9 +189,34 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a10e24b16e536f4f6e187e9f1950c5bc5" name="a10e24b16e536f4f6e187e9f1950c5bc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10e24b16e536f4f6e187e9f1950c5bc5">&#9670;&#160;</a></span>Publisher() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mqpp::Publisher::Publisher </td>
+          <td>(</td>
+          <td class="paramtype">Publisher &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="ab007b929013768745268eb4ae7806bcd" name="ab007b929013768745268eb4ae7806bcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab007b929013768745268eb4ae7806bcd">&#9670;&#160;</a></span>operator=()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab007b929013768745268eb4ae7806bcd">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -194,6 +228,31 @@ Public Member Functions</h2></td></tr>
           <td class="memname"><a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp; mqpp::Publisher::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af11b5d6a409492682a17030b417d63b2" name="af11b5d6a409492682a17030b417d63b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af11b5d6a409492682a17030b417d63b2">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp; mqpp::Publisher::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ad25dad7a2f2872b5ceeb09f37665a987">Publisher</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -224,7 +283,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Publish a message and return the assigned message ID </p>
+<p>Publish a message and return the assigned message ID </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">topic</td><td>Topic to publish to </td></tr>
+    <tr><td class="paramname">payload</td><td><a class="el" href="namespacemqpp.html#a8259d07e086d746e46eb47002ccd7348">Data</a> to be sent </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a> of the message created </dd></dl>
 
 </div>
 </div>

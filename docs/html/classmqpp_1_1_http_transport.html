@@ -108,7 +108,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2e903fd006c860b088be84b28c31e609" id="r_a2e903fd006c860b088be84b28c31e609"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2e903fd006c860b088be84b28c31e609">HttpTransport</a> ()</td></tr>
 <tr class="memitem:a474fc13724b5f8d498069fbcc88d79a6" id="r_a474fc13724b5f8d498069fbcc88d79a6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a474fc13724b5f8d498069fbcc88d79a6">~HttpTransport</a> () override</td></tr>
 <tr class="memitem:a12979ecb849ca056a0bb086c5c73a3ff" id="r_a12979ecb849ca056a0bb086c5c73a3ff"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a12979ecb849ca056a0bb086c5c73a3ff">send_request</a> (const std::string &amp;url, const std::string &amp;body) override</td></tr>
-<tr class="memitem:a07decee9cc8f30be94d8725ff386ab39" id="r_a07decee9cc8f30be94d8725ff386ab39"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a07decee9cc8f30be94d8725ff386ab39">register_handler</a> (const std::string &amp;<a class="el" href="structmqpp_1_1endpoint.html">endpoint</a>, <a class="el" href="classmqpp_1_1_i_transport.html#a783ff45605f2bce89967c00ed8d3a293">RequestHandler</a> handler) override</td></tr>
+<tr class="memitem:a07decee9cc8f30be94d8725ff386ab39" id="r_a07decee9cc8f30be94d8725ff386ab39"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a07decee9cc8f30be94d8725ff386ab39">register_handler</a> (const std::string &amp;<a class="el" href="namespacemqpp_1_1endpoint.html">endpoint</a>, <a class="el" href="classmqpp_1_1_i_transport.html#a18166361cd31c42c8c62a103a7db45da">RequestHandler</a> handler) override</td></tr>
 <tr class="memitem:a7a4cc4e6e2f370e1aa1b21043dee33e7" id="r_a7a4cc4e6e2f370e1aa1b21043dee33e7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7a4cc4e6e2f370e1aa1b21043dee33e7">start</a> (uint16_t <a class="el" href="#a14493e9e6f3597161543c781150a43eb">port</a>) override</td></tr>
 <tr class="memitem:ae318a64fb3e495d0577583d6e81cf474" id="r_ae318a64fb3e495d0577583d6e81cf474"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae318a64fb3e495d0577583d6e81cf474">stop</a> () override</td></tr>
 <tr class="memitem:a14493e9e6f3597161543c781150a43eb" id="r_a14493e9e6f3597161543c781150a43eb"><td class="memItemLeft">uint16_t&#160;</td><td class="memItemRight"><a class="el" href="#a14493e9e6f3597161543c781150a43eb">port</a> () const override</td></tr>
@@ -118,7 +118,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classmqpp_1_1_i_transport"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_classmqpp_1_1_i_transport')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Types inherited from <a class="el" href="classmqpp_1_1_i_transport.html">mqpp::ITransport</a></td></tr>
-<tr class="memitem:a783ff45605f2bce89967c00ed8d3a293 inherit pub_types_classmqpp_1_1_i_transport" id="r_a783ff45605f2bce89967c00ed8d3a293"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="classmqpp_1_1_i_transport.html#a783ff45605f2bce89967c00ed8d3a293">RequestHandler</a> = std::function&lt;std::string(const std::string&amp; json)&gt;</td></tr>
+<tr class="memitem:a18166361cd31c42c8c62a103a7db45da inherit pub_types_classmqpp_1_1_i_transport" id="r_a18166361cd31c42c8c62a103a7db45da"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="classmqpp_1_1_i_transport.html#a18166361cd31c42c8c62a103a7db45da">RequestHandler</a> = std::function&lt;std::string(const std::string&amp; body)&gt;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>HTTP-based transport implementation using cpp-httplib </p>
@@ -188,7 +188,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Get the port this transport is listening on Returns 0 if not started </p>
+<p>Get the port this transport is listening on </p>
 
 <p>Implements <a class="el" href="classmqpp_1_1_i_transport.html#aaae8c4795de656408ff8b36a8edf89a3">mqpp::ITransport</a>.</p>
 
@@ -211,7 +211,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classmqpp_1_1_i_transport.html#a783ff45605f2bce89967c00ed8d3a293">RequestHandler</a></td>          <td class="paramname"><span class="paramname"><em>handler</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="classmqpp_1_1_i_transport.html#a18166361cd31c42c8c62a103a7db45da">RequestHandler</a></td>          <td class="paramname"><span class="paramname"><em>handler</em></span>&#160;)</td>
         </tr>
       </table>
   </td>

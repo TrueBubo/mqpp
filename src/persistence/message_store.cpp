@@ -95,16 +95,6 @@ MessageStore::load_all_messages() {
     return messages;
 }
 
-std::optional<DeliveryState> MessageStore::get_delivery_state(const MessageId& msg_id) const {
-    std::shared_lock lock(mutex_);
-
-    auto it = delivery_tracking_.find(msg_id);
-    if (it != delivery_tracking_.end()) {
-        return it->second;
-    }
-    return std::nullopt;
-}
-
 void MessageStore::write_message_file(const Message& msg, const DeliveryState& state) const {
     std::ostringstream content;
 
@@ -155,16 +145,18 @@ std::pair<Message, DeliveryState> MessageStore::read_message_file(const std::fil
 std::vector<std::pair<Message, DeliveryState>> MessageStore::get_pending_messages_for_consumer(const std::string& consumer_id) {
     std::shared_lock lock(mutex_);
 
-    std::vector<std::pair<Message, DeliveryState>> messages;
+    auto&& pending = delivery_tracking_
+        | std::views::filter([&](const auto& entry) {
+            auto&& [msg_id, current_state] = entry;
+            return current_state.pending_consumers.contains(consumer_id);
+          })
+        | std::views::transform([&](const auto& entry) {
+            auto&& [msg_id, current_state] = entry;
+            return read_message_file(get_message_path(msg_id));
+          })
+        | std::ranges::to<std::vector>();
 
-    for (const auto& [msg_id, state] : delivery_tracking_) {
-        if (state.pending_consumers.contains(consumer_id)) {
-            auto [msg, current_state] = read_message_file(get_message_path(msg_id));
-            messages.emplace_back(std::move(msg), std::move(current_state));
-        }
-    }
-
-    return messages;
+    return pending;
 }
 
 std::vector<std::pair<MessageId, std::string>> MessageStore::get_all_message_topics() const {

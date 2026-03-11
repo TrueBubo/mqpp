@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ok_0',['ok',['../structmqpp_1_1status.html#aba2b41bfe74ebe0a28ef4702d8ddcc65',1,'mqpp::status']]]
+  ['storage_5fdir_0',['storage_dir',['../structmqpp_1_1_broker_config.html#a6259b404fa3a13694d113c79c2fc79e4',1,'mqpp::BrokerConfig']]]
 ];

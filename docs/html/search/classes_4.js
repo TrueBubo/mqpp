@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['endpoint_0',['endpoint',['../structmqpp_1_1endpoint.html',1,'mqpp']]]
+  ['httptransport_0',['HttpTransport',['../classmqpp_1_1_http_transport.html',1,'mqpp']]]
 ];

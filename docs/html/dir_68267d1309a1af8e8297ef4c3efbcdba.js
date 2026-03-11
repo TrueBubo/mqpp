@@ -7,6 +7,5 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "network", "dir_fc4c7f03e1a69a98c370fae55a743828.html", "dir_fc4c7f03e1a69a98c370fae55a743828" ],
     [ "persistence", "dir_392a571cbe38c0f70187a9bd8557c37b.html", "dir_392a571cbe38c0f70187a9bd8557c37b" ],
     [ "subscription", "dir_0e31ebb83418efe443380d36898f4c39.html", "dir_0e31ebb83418efe443380d36898f4c39" ],
-    [ "util", "dir_b7878ad5ecbf2506f4125b9d34c97e45.html", "dir_b7878ad5ecbf2506f4125b9d34c97e45" ],
-    [ "shared.hpp", "shared_8hpp.html", "shared_8hpp" ]
+    [ "util", "dir_b7878ad5ecbf2506f4125b9d34c97e45.html", "dir_b7878ad5ecbf2506f4125b9d34c97e45" ]
 ];

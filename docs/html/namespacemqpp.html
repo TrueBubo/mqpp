@@ -92,6 +92,13 @@ $(function(){initNavTree('namespacemqpp.html','',''); });
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:endpoint" id="r_endpoint"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacemqpp_1_1endpoint.html">endpoint</a></td></tr>
+<tr class="memitem:field" id="r_field"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacemqpp_1_1field.html">field</a></td></tr>
+<tr class="memitem:type" id="r_type"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacemqpp_1_1type.html">type</a></td></tr>
+<tr class="memitem:status" id="r_status"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacemqpp_1_1status.html">status</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Broker" id="r_Broker"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classmqpp_1_1_broker.html">Broker</a></td></tr>
@@ -109,10 +116,6 @@ Classes</h2></td></tr>
 <tr class="memitem:ITransport" id="r_ITransport"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classmqpp_1_1_i_transport.html">ITransport</a></td></tr>
 <tr class="memitem:DeliveryState" id="r_DeliveryState"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmqpp_1_1_delivery_state.html">DeliveryState</a></td></tr>
 <tr class="memitem:MessageStore" id="r_MessageStore"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classmqpp_1_1_message_store.html">MessageStore</a></td></tr>
-<tr class="memitem:endpoint" id="r_endpoint"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmqpp_1_1endpoint.html">endpoint</a></td></tr>
-<tr class="memitem:field" id="r_field"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmqpp_1_1field.html">field</a></td></tr>
-<tr class="memitem:type" id="r_type"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmqpp_1_1type.html">type</a></td></tr>
-<tr class="memitem:status" id="r_status"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmqpp_1_1status.html">status</a></td></tr>
 <tr class="memitem:Subscription" id="r_Subscription"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmqpp_1_1_subscription.html">Subscription</a></td></tr>
 <tr class="memitem:SubscriptionManager" id="r_SubscriptionManager"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classmqpp_1_1_subscription_manager.html">SubscriptionManager</a></td></tr>
 <tr class="memitem:StringSerializer" id="r_StringSerializer"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classmqpp_1_1_string_serializer.html">StringSerializer</a></td></tr>
@@ -233,6 +236,13 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Helper method for creating responses indicating something went wrong </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">exception</td><td>Exception thrown </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Serialized response </dd></dl>
 
 </div>
 </div>
@@ -258,6 +268,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Helper method for creating responses saying everything went well and no other data were needed to be sent </p><dl class="section return"><dt>Returns</dt><dd>Serialized response </dd></dl>
 
 </div>
 </div>

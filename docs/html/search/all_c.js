@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['ok_0',['ok',['../structmqpp_1_1status.html#aba2b41bfe74ebe0a28ef4702d8ddcc65',1,'mqpp::status']]],
-  ['operator_3d_1',['operator=',['../classmqpp_1_1_broker.html#ae7d9e01219c3c0701c27f75aeac54533',1,'mqpp::Broker::operator=(const Broker &amp;)=delete'],['../classmqpp_1_1_broker.html#a7fd3cc6dbfaab1b13c60a8f7e5d22d66',1,'mqpp::Broker::operator=(Broker &amp;&amp;)=delete'],['../classmqpp_1_1_consumer.html#a51eb6dea9f3b69bf69f81b2c4ab1f34c',1,'mqpp::Consumer::operator=()'],['../classmqpp_1_1_publisher.html#ab007b929013768745268eb4ae7806bcd',1,'mqpp::Publisher::operator=()'],['../classmqpp_1_1_message_dispatcher.html#a012db291ac205cb88cf57839a7004b0a',1,'mqpp::MessageDispatcher::operator=()']]]
+  ['register_5fconsumer_5fendpoint_0',['register_consumer_endpoint',['../classmqpp_1_1_message_dispatcher.html#ae2e70605437bfe847eb4b92ac6f6517c',1,'mqpp::MessageDispatcher']]],
+  ['register_5fhandler_1',['register_handler',['../classmqpp_1_1_http_transport.html#a07decee9cc8f30be94d8725ff386ab39',1,'mqpp::HttpTransport::register_handler()'],['../classmqpp_1_1_i_transport.html#a4dacf475748d643ffe85facfea6bb5c3',1,'mqpp::ITransport::register_handler()']]],
+  ['remove_5fsubscription_2',['remove_subscription',['../classmqpp_1_1_subscription_manager.html#ade06709045b2ac4aadf19eeeba3703c4',1,'mqpp::SubscriptionManager']]],
+  ['requesthandler_3',['RequestHandler',['../classmqpp_1_1_i_transport.html#a18166361cd31c42c8c62a103a7db45da',1,'mqpp::ITransport']]],
+  ['retry_5finterval_4',['retry_interval',['../structmqpp_1_1_broker_config.html#aeffa6c5a7d7c47974967bae9b910cc42',1,'mqpp::BrokerConfig']]],
+  ['retry_5floop_5fdelay_5',['RETRY_LOOP_DELAY',['../namespacemqpp.html#a05070cec3732db5e19ff4a87a340108a',1,'mqpp']]],
+  ['retry_5floop_5fmax_5fattempts_6',['RETRY_LOOP_MAX_ATTEMPTS',['../namespacemqpp.html#a8de0b8dd817aab70aef6e3ec855d7359',1,'mqpp']]]
 ];

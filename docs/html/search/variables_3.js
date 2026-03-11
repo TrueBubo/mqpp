@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['error_0',['error',['../structmqpp_1_1status.html#acc13a6746c16d1c14d613765d6dcf6db',1,'mqpp::status']]]
+  ['last_5fretry_0',['last_retry',['../structmqpp_1_1_delivery_state.html#a7cac4d67faa93a01b07b9d5999d09178',1,'mqpp::DeliveryState']]],
+  ['listen_5fport_1',['listen_port',['../structmqpp_1_1_consumer_config.html#ad11393f79cba0e5ccaf0ecd1ffa43ef1',1,'mqpp::ConsumerConfig']]],
+  ['listener_5fdefault_5fport_2',['LISTENER_DEFAULT_PORT',['../namespacemqpp.html#aae8b1a664fe6e7cb2988c7f842663bbd',1,'mqpp']]]
 ];

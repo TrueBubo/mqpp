@@ -1,5 +1,5 @@
-#ifndef MQ_UUID_UTIL_HPP
-#define MQ_UUID_UTIL_HPP
+#ifndef UUID_UTIL_HPP
+#define UUID_UTIL_HPP
 
 #include <uuid.h>
 
@@ -20,4 +20,4 @@ public:
 };
 
 }
-#endif //MQ_UUID_UTIL_HPP
+#endif // UUID_UTIL_HPP

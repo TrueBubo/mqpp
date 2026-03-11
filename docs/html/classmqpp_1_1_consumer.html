@@ -100,6 +100,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeba84891f563c98e0764a0ef26260ffc" id="r_aeba84891f563c98e0764a0ef26260ffc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aeba84891f563c98e0764a0ef26260ffc">~Consumer</a> ()</td></tr>
 <tr class="memitem:a0036f62a8cb3aed58a19b33316a86c27" id="r_a0036f62a8cb3aed58a19b33316a86c27"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0036f62a8cb3aed58a19b33316a86c27">Consumer</a> (const Consumer &amp;)=delete</td></tr>
 <tr class="memitem:a51eb6dea9f3b69bf69f81b2c4ab1f34c" id="r_a51eb6dea9f3b69bf69f81b2c4ab1f34c"><td class="memItemLeft"><a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a51eb6dea9f3b69bf69f81b2c4ab1f34c">operator=</a> (const <a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp;)=delete</td></tr>
+<tr class="memitem:a026972d4c09773f78984385f9ac1a162" id="r_a026972d4c09773f78984385f9ac1a162"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a026972d4c09773f78984385f9ac1a162">Consumer</a> (Consumer &amp;&amp;)=delete</td></tr>
+<tr class="memitem:a014df7e39f94f265cb290cad102fc664" id="r_a014df7e39f94f265cb290cad102fc664"><td class="memItemLeft"><a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a014df7e39f94f265cb290cad102fc664">operator=</a> (<a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp;&amp;)=delete</td></tr>
 <tr class="memitem:abb858178dd47323c2f41297c4cfee47a" id="r_abb858178dd47323c2f41297c4cfee47a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abb858178dd47323c2f41297c4cfee47a">set_handler</a> (<a class="el" href="namespacemqpp.html#a333ef127bb5a1c4b1d6c478d929d426c">MessageHandler</a> handler)</td></tr>
 <tr class="memitem:a5f6767441ce90632b76ceeb8a61096f1" id="r_a5f6767441ce90632b76ceeb8a61096f1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5f6767441ce90632b76ceeb8a61096f1">start</a> ()</td></tr>
 <tr class="memitem:adcd27c2ab6b1dfb4a7bb77559928931f" id="r_adcd27c2ab6b1dfb4a7bb77559928931f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#adcd27c2ab6b1dfb4a7bb77559928931f">stop</a> ()</td></tr>
@@ -108,7 +110,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p><a class="el" href="classmqpp_1_1_consumer.html">Consumer</a> client for receiving messages from the broker </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae627d8227542fccb1c240a2f9c0a1015" name="ae627d8227542fccb1c240a2f9c0a1015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae627d8227542fccb1c240a2f9c0a1015">&#9670;&#160;</a></span>Consumer() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae627d8227542fccb1c240a2f9c0a1015">&#9670;&#160;</a></span>Consumer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,6 +131,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Setups the consumer to a valid state </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Contains the values used in initialization of <a class="el" href="classmqpp_1_1_consumer.html">Consumer</a> members </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -146,11 +154,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Ensures the <a class="el" href="classmqpp_1_1_broker.html">Broker</a> and its members are gracefully shutdown </p>
 
 </div>
 </div>
 <a id="a0036f62a8cb3aed58a19b33316a86c27" name="a0036f62a8cb3aed58a19b33316a86c27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0036f62a8cb3aed58a19b33316a86c27">&#9670;&#160;</a></span>Consumer() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0036f62a8cb3aed58a19b33316a86c27">&#9670;&#160;</a></span>Consumer() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,9 +183,34 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a026972d4c09773f78984385f9ac1a162" name="a026972d4c09773f78984385f9ac1a162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a026972d4c09773f78984385f9ac1a162">&#9670;&#160;</a></span>Consumer() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mqpp::Consumer::Consumer </td>
+          <td>(</td>
+          <td class="paramtype">Consumer &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a51eb6dea9f3b69bf69f81b2c4ab1f34c" name="a51eb6dea9f3b69bf69f81b2c4ab1f34c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51eb6dea9f3b69bf69f81b2c4ab1f34c">&#9670;&#160;</a></span>operator=()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a51eb6dea9f3b69bf69f81b2c4ab1f34c">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,6 +222,31 @@ Public Member Functions</h2></td></tr>
           <td class="memname"><a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp; mqpp::Consumer::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a014df7e39f94f265cb290cad102fc664" name="a014df7e39f94f265cb290cad102fc664"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a014df7e39f94f265cb290cad102fc664">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp; mqpp::Consumer::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ae627d8227542fccb1c240a2f9c0a1015">Consumer</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -214,7 +273,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the message handler callback </p>
+<p>Set the message handler callback </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handler</td><td>Function invoked on each message received </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

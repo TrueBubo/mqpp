@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['http_5ftransport_2ecpp_0',['http_transport.cpp',['../http__transport_8cpp.html',1,'']]],
-  ['http_5ftransport_2ehpp_1',['http_transport.hpp',['../http__transport_8hpp.html',1,'']]],
-  ['httptransport_2',['HttpTransport',['../classmqpp_1_1_http_transport.html',1,'mqpp::HttpTransport'],['../classmqpp_1_1_http_transport.html#a2e903fd006c860b088be84b28c31e609',1,'mqpp::HttpTransport::HttpTransport()']]]
+  ['id_0',['id',['../classmqpp_1_1_message.html#ae9810f9df02ddafb213b47e69b34285e',1,'mqpp::Message']]],
+  ['itransport_1',['ITransport',['../classmqpp_1_1_i_transport.html',1,'mqpp']]]
 ];

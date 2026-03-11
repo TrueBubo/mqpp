@@ -38,6 +38,10 @@ struct DeliveryState {
  */
 class MessageStore {
 public:
+    /**
+     * Constructs MessageStore
+     * @param storage_dir Where should message
+     */
     explicit MessageStore(std::filesystem::path storage_dir);
 
     /**
@@ -51,42 +55,45 @@ public:
     /**
      * Mark message as acknowledged by a consumer
      * Automatically cleans up if all consumers have acked
+     * @param msg_id Acknowledged message
+     * @param consumer_id ID of the consumer who sent acknowledge
      */
     void acknowledge(const MessageId& msg_id,
                     const std::string& consumer_id);
 
     /**
-     * Get messages needing retry (not fully acked, past retry interval)
+     * Get messages needing retry (not acked by everyone, last retry older than retry interval)
+     * @param retry_interval How often to retry
+     * @return Messages with their delivery states
      */
     std::vector<std::pair<Message, DeliveryState>> get_messages_for_retry(
         std::chrono::seconds retry_interval);
 
     /**
      * Load all persisted messages on startup
-     * Returns list of delivery states for recovery
+     * @return list of messages and their delivery states for recovery
      */
     std::vector<std::pair<Message, DeliveryState>> load_all_messages();
 
     /**
-     * Get delivery state for a message (for testing/monitoring)
-     */
-    std::optional<DeliveryState> get_delivery_state(const MessageId& msg_id) const;
-
-    /**
      * Get all messages that are pending delivery for a specific consumer
+     * @param consumer_id ID of the requested consumer
+     * @return List of pending messages and their states
      */
     std::vector<std::pair<Message, DeliveryState>> get_pending_messages_for_consumer(
         const std::string& consumer_id);
 
     /**
-     * Returns (MessageId, topic) for every tracked message.
      * Used to match stored messages against a newly subscribed consumer's patterns.
+     * @return messageId and topic pair for every tracked message.
      */
     std::vector<std::pair<MessageId, std::string>> get_all_message_topics() const;
 
     /**
      * Add consumer_id to a message's pending set if not already pending/acknowledged.
      * Persists the updated state to disk.
+     * @param msg_id ID of the message to be updated with the new consumer
+     * @param consumer_id ID of the consumer who wants to receive the message
      */
     void add_pending_consumer(const MessageId& msg_id, const UserId& consumer_id);
 
@@ -96,8 +103,24 @@ private:
 
     std::unordered_map<MessageId, DeliveryState> delivery_tracking_;
 
+    /**
+     * Persists the message to file
+     * @param msg Message to be stored
+     * @param state State of the message
+     */
     void write_message_file(const Message& msg, const DeliveryState& state) const;
+
+    /**
+     * Deletes the message by ID from disk
+     * @param msg_id ID of the message to be deleted
+     */
     void delete_message_file(const MessageId& msg_id) const;
+
+    /**
+     * Reads message file from disk
+     * @param file path to the file
+     * @return Message with its delivery state
+     */
     static std::pair<Message, DeliveryState> read_message_file(const std::filesystem::path& file);
     static Data parse_file_data(const std::filesystem::path& file);
     static Message parse_message(const Data& data);

@@ -16,11 +16,17 @@ class Message {
 public:
     /**
      * Create a new message with generated UUID
+     * @param topic Category used for filtering the messages
+     * @param payload Data
      */
     Message(std::string topic, std::string payload);
 
     /**
      * Create message with explicit ID (for deserialization)
+     * @param id Unique identifier of the message
+     * @param topic Category used for filtering the messages
+     * @param payload Data
+     * @param timestamp When was message created
      */
     Message(MessageId id, std::string topic, std::string payload,
             std::chrono::system_clock::time_point timestamp);
@@ -43,7 +49,7 @@ public:
     Data to_map() const;
 
     /**
-     *
+     * Inverse operation to serialize
      * @param str Serialized message
      * @return Parsed message
      */

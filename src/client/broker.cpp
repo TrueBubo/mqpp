@@ -94,7 +94,7 @@ std::string Broker::handle_publish(const std::string& request_str) const {
 std::string Broker::handle_subscribe(const std::string& request_str) const {
     try {
         auto&& request = SubscribeRequest::from_api(request_str);
-        auto&& [consumer_id, callback_url, patterns_str, patterns] = request;
+        auto&& [consumer_id, callback_url, patterns] = request;
 
         dispatcher_->register_consumer_endpoint(consumer_id, callback_url);
 
@@ -157,8 +157,7 @@ SubscribeRequest SubscribeRequest::from_api(const std::string& request_str) {
     return {
         std::move(consumer_id),
         std::move(callback_url),
-        std::move(patterns_str),
-        patterns
+        std::move(patterns)
     };
 }
 
@@ -166,7 +165,7 @@ std::string SubscribeRequest::to_response() {
     std::map<std::string, std::string> response;
     response[field::status]      = status::ok;
     response[field::consumer_id] = std::move(consumer_id);
-    response[field::patterns]    = std::move(patterns_str);
+    response[field::patterns]    = std::move(StringSerializer::serialize_vector(patterns));
 
     return StringSerializer::serialize(response);
 }

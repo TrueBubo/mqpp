@@ -39,12 +39,22 @@ namespace status {
     static constexpr auto error = "error";
 };
 
+/**
+ * Helper method for creating responses indicating something went wrong
+ * @param exception Exception thrown
+ * @return Serialized response
+ */
 inline std::string create_error_response(const std::exception& exception) {
     Data error;
     error[field::status] = status::error;
     error[field::message] = exception.what();
     return StringSerializer::serialize(error);
 }
+
+/**
+ * Helper method for creating responses saying everything went well and no other data were needed to be sent
+ * @return Serialized response
+ */
 
 inline std::string create_ok_response() {
     Data response;

@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['field_0',['field',['../structmqpp_1_1field.html',1,'mqpp']]],
-  ['find_5fmatching_5fconsumers_1',['find_matching_consumers',['../classmqpp_1_1_subscription_manager.html#a4b707bc9cf4bb0c0f3a63e7e2c376744',1,'mqpp::SubscriptionManager']]],
-  ['from_5fapi_2',['from_api',['../structmqpp_1_1_publish_request.html#a62c44171a89936789f273977ecd836c5',1,'mqpp::PublishRequest::from_api()'],['../structmqpp_1_1_subscribe_request.html#a137a1920853786a779d9d5ecee5935d6',1,'mqpp::SubscribeRequest::from_api()'],['../structmqpp_1_1_acknowledge_request.html#a35d1eef44187903fccb922ed1f4bde6a',1,'mqpp::AcknowledgeRequest::from_api()']]],
-  ['from_5fmap_3',['from_map',['../classmqpp_1_1_message.html#a9ca600b8f7d758ba8856d9574c52fd75',1,'mqpp::Message']]]
+  ['generate_0',['generate',['../classmqpp_1_1_uuid_util.html#ab52890a702e39bcaf23efb58f5fb6200',1,'mqpp::UuidUtil']]],
+  ['get_1',['get',['../classmqpp_1_1_string_serializer.html#a4347004991d29cbf11f106b63407d2c8',1,'mqpp::StringSerializer']]],
+  ['get_5fall_5fmessage_5ftopics_2',['get_all_message_topics',['../classmqpp_1_1_message_store.html#add764e05f38c5dc8caaa3cdd7e590d02',1,'mqpp::MessageStore']]],
+  ['get_5fall_5fsubscriptions_3',['get_all_subscriptions',['../classmqpp_1_1_subscription_manager.html#aace58a2ba6c4a2095f2945a8963951c6',1,'mqpp::SubscriptionManager']]],
+  ['get_5fmessages_5ffor_5fretry_4',['get_messages_for_retry',['../classmqpp_1_1_message_store.html#a3f767d73003027ddbc9b97ed9332a1f0',1,'mqpp::MessageStore']]],
+  ['get_5fpending_5fmessages_5ffor_5fconsumer_5',['get_pending_messages_for_consumer',['../classmqpp_1_1_message_store.html#ab6ad96d113098448e6048ac1c4a25276',1,'mqpp::MessageStore']]],
+  ['get_5frequired_6',['get_required',['../classmqpp_1_1_string_serializer.html#a8212432375251d38366070a44b48b9fc',1,'mqpp::StringSerializer']]]
 ];

@@ -1,5 +1,9 @@
 var namespacemqpp =
 [
+    [ "endpoint", "namespacemqpp_1_1endpoint.html", null ],
+    [ "field", "namespacemqpp_1_1field.html", null ],
+    [ "type", "namespacemqpp_1_1type.html", null ],
+    [ "status", "namespacemqpp_1_1status.html", null ],
     [ "Broker", "classmqpp_1_1_broker.html", "classmqpp_1_1_broker" ],
     [ "PublishRequest", "structmqpp_1_1_publish_request.html", "structmqpp_1_1_publish_request" ],
     [ "SubscribeRequest", "structmqpp_1_1_subscribe_request.html", "structmqpp_1_1_subscribe_request" ],
@@ -15,10 +19,6 @@ var namespacemqpp =
     [ "ITransport", "classmqpp_1_1_i_transport.html", "classmqpp_1_1_i_transport" ],
     [ "DeliveryState", "structmqpp_1_1_delivery_state.html", "structmqpp_1_1_delivery_state" ],
     [ "MessageStore", "classmqpp_1_1_message_store.html", "classmqpp_1_1_message_store" ],
-    [ "endpoint", "structmqpp_1_1endpoint.html", null ],
-    [ "field", "structmqpp_1_1field.html", null ],
-    [ "type", "structmqpp_1_1type.html", null ],
-    [ "status", "structmqpp_1_1status.html", null ],
     [ "Subscription", "structmqpp_1_1_subscription.html", "structmqpp_1_1_subscription" ],
     [ "SubscriptionManager", "classmqpp_1_1_subscription_manager.html", "classmqpp_1_1_subscription_manager" ],
     [ "StringSerializer", "classmqpp_1_1_string_serializer.html", null ],

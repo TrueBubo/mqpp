@@ -103,7 +103,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a0b5bb6292ada0c11c6d890e6d8b7f5e0" id="r_a0b5bb6292ada0c11c6d890e6d8b7f5e0"><td class="memItemLeft"><a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0b5bb6292ada0c11c6d890e6d8b7f5e0">message_id</a></td></tr>
 <tr class="memitem:a73b10adbea3042b45e130860e72ef9a4" id="r_a73b10adbea3042b45e130860e72ef9a4"><td class="memItemLeft"><a class="el" href="namespacemqpp.html#a9e58e3af9d9a48db84108069e87d5bc6">UserId</a>&#160;</td><td class="memItemRight"><a class="el" href="#a73b10adbea3042b45e130860e72ef9a4">consumer_id</a></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Structure which holds data parsed from requests coming from <a class="el" href="classmqpp_1_1_consumer.html">Consumer</a> on acknowledge endpoint </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a35d1eef44187903fccb922ed1f4bde6a" name="a35d1eef44187903fccb922ed1f4bde6a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a35d1eef44187903fccb922ed1f4bde6a">&#9670;&#160;</a></span>from_api()</h2>
 
@@ -126,6 +128,13 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Handles string received via network and makes a new instance of ConsumerRequest </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request_str</td><td>String payload received from consumer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structmqpp_1_1_acknowledge_request.html">AcknowledgeRequest</a> instance parsed from the request </dd></dl>
 
 </div>
 </div>

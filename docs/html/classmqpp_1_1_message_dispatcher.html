@@ -100,6 +100,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3337b407a1af24db0296fde2bd82dbfb" id="r_a3337b407a1af24db0296fde2bd82dbfb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3337b407a1af24db0296fde2bd82dbfb">~MessageDispatcher</a> ()</td></tr>
 <tr class="memitem:af828d43b0696fa2f754b959da61f4e55" id="r_af828d43b0696fa2f754b959da61f4e55"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af828d43b0696fa2f754b959da61f4e55">MessageDispatcher</a> (const MessageDispatcher &amp;)=delete</td></tr>
 <tr class="memitem:a012db291ac205cb88cf57839a7004b0a" id="r_a012db291ac205cb88cf57839a7004b0a"><td class="memItemLeft"><a class="el" href="#afba2aec474b8f8d6eb9a68c817e32034">MessageDispatcher</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a012db291ac205cb88cf57839a7004b0a">operator=</a> (const <a class="el" href="#afba2aec474b8f8d6eb9a68c817e32034">MessageDispatcher</a> &amp;)=delete</td></tr>
+<tr class="memitem:a12a44ea88e6d94fe540efec0fc9aeba9" id="r_a12a44ea88e6d94fe540efec0fc9aeba9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a12a44ea88e6d94fe540efec0fc9aeba9">MessageDispatcher</a> (const MessageDispatcher &amp;&amp;)=delete</td></tr>
+<tr class="memitem:ad828e71306c0a132ad057d11f680d964" id="r_ad828e71306c0a132ad057d11f680d964"><td class="memItemLeft"><a class="el" href="#afba2aec474b8f8d6eb9a68c817e32034">MessageDispatcher</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad828e71306c0a132ad057d11f680d964">operator=</a> (const <a class="el" href="#afba2aec474b8f8d6eb9a68c817e32034">MessageDispatcher</a> &amp;&amp;)=delete</td></tr>
 <tr class="memitem:ae25490640b306b768b034687e5697a49" id="r_ae25490640b306b768b034687e5697a49"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae25490640b306b768b034687e5697a49">dispatch</a> (const <a class="el" href="classmqpp_1_1_message.html">Message</a> &amp;message, const std::vector&lt; <a class="el" href="namespacemqpp.html#a9e58e3af9d9a48db84108069e87d5bc6">UserId</a> &gt; &amp;consumer_ids) const</td></tr>
 <tr class="memitem:af8dd6aabeebf177b76cb7af90d0cf7d7" id="r_af8dd6aabeebf177b76cb7af90d0cf7d7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af8dd6aabeebf177b76cb7af90d0cf7d7">start_retry_loop</a> ()</td></tr>
 <tr class="memitem:a03cadfb7666c8762746c39b76ce5ac14" id="r_a03cadfb7666c8762746c39b76ce5ac14"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a03cadfb7666c8762746c39b76ce5ac14">stop</a> ()</td></tr>
@@ -111,7 +113,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Handles async message delivery to consumers with retry logic Manages background retry thread </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afba2aec474b8f8d6eb9a68c817e32034" name="afba2aec474b8f8d6eb9a68c817e32034"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afba2aec474b8f8d6eb9a68c817e32034">&#9670;&#160;</a></span>MessageDispatcher() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afba2aec474b8f8d6eb9a68c817e32034">&#9670;&#160;</a></span>MessageDispatcher() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,6 +135,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Constructs a message dispatcher </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transport</td><td>Used for network communication </td></tr>
+    <tr><td class="paramname">store</td><td>Used for persisting messages </td></tr>
+    <tr><td class="paramname">retry_interval</td><td>How often should it retry to deliver not delivered messages </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -150,11 +160,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Graceful shutdown of <a class="el" href="classmqpp_1_1_message_dispatcher.html">MessageDispatcher</a> </p>
 
 </div>
 </div>
 <a id="af828d43b0696fa2f754b959da61f4e55" name="af828d43b0696fa2f754b959da61f4e55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af828d43b0696fa2f754b959da61f4e55">&#9670;&#160;</a></span>MessageDispatcher() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af828d43b0696fa2f754b959da61f4e55">&#9670;&#160;</a></span>MessageDispatcher() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,6 +177,31 @@ Public Member Functions</h2></td></tr>
           <td class="memname">mqpp::MessageDispatcher::MessageDispatcher </td>
           <td>(</td>
           <td class="paramtype">const MessageDispatcher &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a12a44ea88e6d94fe540efec0fc9aeba9" name="a12a44ea88e6d94fe540efec0fc9aeba9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12a44ea88e6d94fe540efec0fc9aeba9">&#9670;&#160;</a></span>MessageDispatcher() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mqpp::MessageDispatcher::MessageDispatcher </td>
+          <td>(</td>
+          <td class="paramtype">const MessageDispatcher &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -197,7 +233,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Dispatch message to selected consumers Does not wait for acknowledgement </p>
+<p>Dispatch message to selected consumers Does not wait for acknowledgement </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td><a class="el" href="classmqpp_1_1_message.html">Message</a> to be delivered </td></tr>
+    <tr><td class="paramname">consumer_ids</td><td>Who to deliver the message to </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -215,12 +257,42 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Dispatch all pending (unacknowledged) messages for a consumer. Called on reconnect to flush messages missed during disconnection. </p>
+<p>Dispatch all pending (unacknowledged) messages for a consumer. Called on reconnect to flush messages missed during disconnection. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">consumer_id</td><td>Id of the customer to which to send messages </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad828e71306c0a132ad057d11f680d964" name="ad828e71306c0a132ad057d11f680d964"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad828e71306c0a132ad057d11f680d964">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#afba2aec474b8f8d6eb9a68c817e32034">MessageDispatcher</a> &amp; mqpp::MessageDispatcher::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#afba2aec474b8f8d6eb9a68c817e32034">MessageDispatcher</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <a id="a012db291ac205cb88cf57839a7004b0a" name="a012db291ac205cb88cf57839a7004b0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a012db291ac205cb88cf57839a7004b0a">&#9670;&#160;</a></span>operator=()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a012db291ac205cb88cf57839a7004b0a">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -262,7 +334,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Register consumer endpoint for delivery </p>
+<p>Register consumer endpoint for delivery </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">consumer_id</td><td>Id of the new consumer </td></tr>
+    <tr><td class="paramname">callback_url</td><td>Where the consumer receives messages </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -316,7 +394,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Unregister consumer endpoint </p>
+<p>Unregister consumer endpoint </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">consumer_id</td><td>Id of the customer </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

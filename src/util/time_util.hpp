@@ -1,5 +1,5 @@
-#ifndef MQ_TIME_UTIL_HPP
-#define MQ_TIME_UTIL_HPP
+#ifndef TIME_UTIL_HPP
+#define TIME_UTIL_HPP
 #include <chrono>
 #include <string>
 
@@ -30,4 +30,4 @@ public:
 };
 }
 
-#endif //MQ_TIME_UTIL_HPP
+#endif //TIME_UTIL_HPP

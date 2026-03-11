@@ -101,7 +101,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4890b13102c1142debb614dea40bce7f" id="r_a4890b13102c1142debb614dea40bce7f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4890b13102c1142debb614dea40bce7f">acknowledge</a> (const <a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a> &amp;msg_id, const std::string &amp;consumer_id)</td></tr>
 <tr class="memitem:a3f767d73003027ddbc9b97ed9332a1f0" id="r_a3f767d73003027ddbc9b97ed9332a1f0"><td class="memItemLeft">std::vector&lt; std::pair&lt; <a class="el" href="classmqpp_1_1_message.html">Message</a>, <a class="el" href="structmqpp_1_1_delivery_state.html">DeliveryState</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a3f767d73003027ddbc9b97ed9332a1f0">get_messages_for_retry</a> (std::chrono::seconds retry_interval)</td></tr>
 <tr class="memitem:a695b89f309b0501a2709a74324f5d30e" id="r_a695b89f309b0501a2709a74324f5d30e"><td class="memItemLeft">std::vector&lt; std::pair&lt; <a class="el" href="classmqpp_1_1_message.html">Message</a>, <a class="el" href="structmqpp_1_1_delivery_state.html">DeliveryState</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a695b89f309b0501a2709a74324f5d30e">load_all_messages</a> ()</td></tr>
-<tr class="memitem:a0727fa2bee6cea4b74847c0d81187875" id="r_a0727fa2bee6cea4b74847c0d81187875"><td class="memItemLeft">std::optional&lt; <a class="el" href="structmqpp_1_1_delivery_state.html">DeliveryState</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0727fa2bee6cea4b74847c0d81187875">get_delivery_state</a> (const <a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a> &amp;msg_id) const</td></tr>
 <tr class="memitem:ab6ad96d113098448e6048ac1c4a25276" id="r_ab6ad96d113098448e6048ac1c4a25276"><td class="memItemLeft">std::vector&lt; std::pair&lt; <a class="el" href="classmqpp_1_1_message.html">Message</a>, <a class="el" href="structmqpp_1_1_delivery_state.html">DeliveryState</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab6ad96d113098448e6048ac1c4a25276">get_pending_messages_for_consumer</a> (const std::string &amp;consumer_id)</td></tr>
 <tr class="memitem:add764e05f38c5dc8caaa3cdd7e590d02" id="r_add764e05f38c5dc8caaa3cdd7e590d02"><td class="memItemLeft">std::vector&lt; std::pair&lt; <a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a>, std::string &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#add764e05f38c5dc8caaa3cdd7e590d02">get_all_message_topics</a> () const</td></tr>
 <tr class="memitem:a9b947ca270272f8e6165ccab4f485ade" id="r_a9b947ca270272f8e6165ccab4f485ade"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9b947ca270272f8e6165ccab4f485ade">add_pending_consumer</a> (const <a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a> &amp;msg_id, const <a class="el" href="namespacemqpp.html#a9e58e3af9d9a48db84108069e87d5bc6">UserId</a> &amp;consumer_id)</td></tr>
@@ -131,6 +130,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Constructs <a class="el" href="classmqpp_1_1_message_store.html">MessageStore</a> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">storage_dir</td><td>Where should message </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -153,7 +158,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Mark message as acknowledged by a consumer Automatically cleans up if all consumers have acked </p>
+<p>Mark message as acknowledged by a consumer Automatically cleans up if all consumers have acked </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_id</td><td>Acknowledged message </td></tr>
+    <tr><td class="paramname">consumer_id</td><td>ID of the consumer who sent acknowledge </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -175,7 +186,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Add consumer_id to a message's pending set if not already pending/acknowledged. Persists the updated state to disk. </p>
+<p>Add consumer_id to a message's pending set if not already pending/acknowledged. Persists the updated state to disk. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_id</td><td>ID of the message to be updated with the new consumer </td></tr>
+    <tr><td class="paramname">consumer_id</td><td>ID of the consumer who wants to receive the message </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -193,25 +210,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns (<a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a>, topic) for every tracked message. Used to match stored messages against a newly subscribed consumer's patterns. </p>
-
-</div>
-</div>
-<a id="a0727fa2bee6cea4b74847c0d81187875" name="a0727fa2bee6cea4b74847c0d81187875"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0727fa2bee6cea4b74847c0d81187875">&#9670;&#160;</a></span>get_delivery_state()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::optional&lt; <a class="el" href="structmqpp_1_1_delivery_state.html">DeliveryState</a> &gt; mqpp::MessageStore::get_delivery_state </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacemqpp.html#aaf738bb57c8a61d37961dfb6f66afb15">MessageId</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>msg_id</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get delivery state for a message (for testing/monitoring) </p>
+<p>Used to match stored messages against a newly subscribed consumer's patterns. </p><dl class="section return"><dt>Returns</dt><dd>messageId and topic pair for every tracked message. </dd></dl>
 
 </div>
 </div>
@@ -229,7 +228,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get messages needing retry (not fully acked, past retry interval) </p>
+<p>Get messages needing retry (not acked by everyone, last retry older than retry interval) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">retry_interval</td><td>How often to retry </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Messages with their delivery states </dd></dl>
 
 </div>
 </div>
@@ -247,7 +252,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get all messages that are pending delivery for a specific consumer </p>
+<p>Get all messages that are pending delivery for a specific consumer </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">consumer_id</td><td>ID of the requested consumer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>List of pending messages and their states </dd></dl>
 
 </div>
 </div>
@@ -265,7 +276,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Load all persisted messages on startup Returns list of delivery states for recovery </p>
+<p>Load all persisted messages on startup </p><dl class="section return"><dt>Returns</dt><dd>list of messages and their delivery states for recovery </dd></dl>
 
 </div>
 </div>

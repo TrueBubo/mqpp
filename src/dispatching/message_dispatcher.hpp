@@ -19,18 +19,31 @@ namespace mqpp {
  */
 class MessageDispatcher {
 public:
+    /**
+     * Constructs a message dispatcher
+     * @param transport Used for network communication
+     * @param store Used for persisting messages
+     * @param retry_interval How often should it retry to deliver not delivered messages
+     */
     MessageDispatcher(std::shared_ptr<ITransport> transport,
-                     std::shared_ptr<MessageStore> store,
-                     std::chrono::seconds retry_interval);
+                      std::shared_ptr<MessageStore> store,
+                      std::chrono::seconds retry_interval);
 
+    /**
+     * Graceful shutdown of MessageDispatcher
+     */
     ~MessageDispatcher();
 
     MessageDispatcher(const MessageDispatcher&) = delete;
     MessageDispatcher& operator=(const MessageDispatcher&) = delete;
+    MessageDispatcher(const MessageDispatcher&&) = delete;
+    MessageDispatcher& operator=(const MessageDispatcher&&) = delete;
 
     /**
      * Dispatch message to selected consumers
      * Does not wait for acknowledgement
+     * @param message Message to be delivered
+     * @param  consumer_ids Who to deliver the message to
      */
     void dispatch(const Message& message,
                  const std::vector<UserId>& consumer_ids) const;
@@ -47,18 +60,22 @@ public:
 
     /**
      * Register consumer endpoint for delivery
+     * @param consumer_id Id of the new consumer
+     * @param callback_url Where the consumer receives messages
      */
     void register_consumer_endpoint(const CallbackUrl& consumer_id,
                                    const CallbackUrl& callback_url);
 
     /**
      * Unregister consumer endpoint
+     * @param consumer_id Id of the customer
      */
     void unregister_consumer_endpoint(const UserId& consumer_id);
 
     /**
      * Dispatch all pending (unacknowledged) messages for a consumer.
      * Called on reconnect to flush messages missed during disconnection.
+     * @param consumer_id Id of the customer to which to send messages
      */
     void dispatch_pending_for_consumer(const UserId& consumer_id) const;
 

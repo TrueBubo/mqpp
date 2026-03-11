@@ -27,7 +27,7 @@ public:
      * Register handler for incoming requests at an endpoint
      * Handler receives string body and returns string response
      */
-    using RequestHandler = std::function<std::string(const std::string& json)>;
+    using RequestHandler = std::function<std::string(const std::string& body)>;
 
     virtual void register_handler(const std::string& endpoint,
                                   RequestHandler handler) = 0;
@@ -45,7 +45,6 @@ public:
 
     /**
      * Get the port this transport is listening on
-     * Returns 0 if not started
      */
     virtual uint16_t port() const = 0;
 };

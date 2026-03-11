@@ -47,7 +47,7 @@ struct ConsumerConfig {
         std::vector<std::string>& topic_patterns,
         const std::string& broker_url = std::format("http://localhost:{}", BROKER_DEFAULT_PORT),
         int listen_port = LISTENER_DEFAULT_PORT
-        ) : consumer_id(consumer_id), topic_patterns(topic_patterns), broker_url(broker_url), listen_port(listen_port)
+        ) : broker_url(broker_url), consumer_id(consumer_id), listen_port(listen_port), topic_patterns(topic_patterns)
     {}
 };
 
